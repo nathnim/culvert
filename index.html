@@ -1,0 +1,1177 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tính cống TCVN 9845</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Tính lưu lượng lũ thiết kế và chọn khẩu độ cống theo TCVN 9845:2013 — TS. Đặng Minh Tân, ĐH GTVT">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<style>
+/* Bố cục: thanh tiêu đề + 4 thẻ (Lưu lượng · Chọn cống · Bảng tra · Thuyết minh); mỗi thẻ: cột nhập liệu bên trái, kết quả bên phải. */
+:root{
+  --bg:#f2f5f4; --surface:#ffffff; --sunk:#e8eeed; --ink:#16232a; --muted:#56676e; --line:#d3dcdb;
+  --accent:#1d5c86; --accent-soft:#dbe8f1; --ochre:#a9601a; --ok:#2c7a4b; --ok-soft:#dcefe3; --bad:#b23a2e; --bad-soft:#f6e0dc;
+  --water:#3f86b8;
+  --f-ui:"Be Vietnam Pro",system-ui,"Segoe UI",Roboto,Arial,sans-serif;
+  --f-doc:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --f-num:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+  --r:6px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f1719; --surface:#162125; --sunk:#1c2a2f; --ink:#e2eaec; --muted:#95a6ab; --line:#2a3b40;
+  --accent:#72b2de; --accent-soft:#1d3444; --ochre:#e2a25c; --ok:#6cc18f; --ok-soft:#173326; --bad:#ef8070; --bad-soft:#3a1f1b; --water:#5a9fd0; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1719; --surface:#162125; --sunk:#1c2a2f; --ink:#e2eaec; --muted:#95a6ab; --line:#2a3b40;
+  --accent:#72b2de; --accent-soft:#1d3444; --ochre:#e2a25c; --ok:#6cc18f; --ok-soft:#173326; --bad:#ef8070; --bad-soft:#3a1f1b; --water:#5a9fd0; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{background:var(--bg);color:var(--ink)}
+body{font-family:var(--f-ui);font-size:14px;line-height:1.5}
+.wrap{max-width:1280px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 40px}
+header.top{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:flex-end;justify-content:space-between;padding-block:20px 14px;border-bottom:1px solid var(--line)}
+.brand h1{margin:0;font-size:22px;font-weight:700;letter-spacing:-.01em;text-wrap:balance}
+.brand h1 span{color:var(--accent)}
+.brand p{margin:2px 0 0;color:var(--muted);font-size:12.5px}
+.top-actions{display:flex;gap:8px;flex-wrap:wrap}
+button,.btn{font:inherit;font-weight:500;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:7px 12px;border-radius:var(--r);cursor:pointer}
+button:hover{border-color:var(--accent)}
+button.primary{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+nav.tabs{display:flex;gap:2px;overflow-x:auto;margin-top:14px;border-bottom:1px solid var(--line)}
+nav.tabs button{border:none;border-bottom:2px solid transparent;border-radius:0;background:none;padding:9px 14px;color:var(--muted);white-space:nowrap}
+nav.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+nav.tabs button .k{font-family:var(--f-num);font-size:11px;color:var(--accent);margin-right:6px}
+.panel{display:grid;grid-template-columns:minmax(0,380px) minmax(0,1fr);gap:20px;margin-top:18px;align-items:start}
+@media (max-width:900px){.panel{grid-template-columns:minmax(0,1fr)}}
+.form{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px}
+fieldset{border:none;margin:0 0 14px;padding:0}
+legend{font-size:11.5px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:6px}
+.row{display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:8px;align-items:center;padding:3px 0}
+.row.full{grid-template-columns:minmax(0,1fr)}
+.row label{font-size:13px}
+.row label i{font-style:normal;color:var(--muted);font-size:12px}
+input[type=number],input[type=text],select{font:inherit;width:100%;padding:5px 7px;border:1px solid var(--line);border-radius:4px;background:var(--bg);color:var(--ink);min-width:0}
+input[type=number]{font-family:var(--f-num);text-align:right}
+.chk{display:flex;gap:8px;align-items:center;font-size:13px;padding:3px 0}
+.hint{font-size:12px;color:var(--muted);margin:4px 0 0}
+.out{min-width:0;display:flex;flex-direction:column;gap:14px}
+.headline{display:flex;flex-wrap:wrap;gap:10px 28px;align-items:baseline;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px}
+.headline .big{font-family:var(--f-num);font-size:30px;font-weight:500;color:var(--accent);line-height:1}
+.headline .lbl{font-size:12px;color:var(--muted)}
+.kv{display:flex;flex-direction:column;gap:2px}
+.kv b{font-family:var(--f-num);font-weight:500;font-size:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;min-width:0}
+.card h3{margin:0 0 8px;font-size:14px;font-weight:600}
+.step{display:grid;grid-template-columns:28px minmax(0,1fr);gap:4px 10px;padding:8px 0;border-top:1px dashed var(--line)}
+.step:first-of-type{border-top:none}
+.step .n{font-family:var(--f-num);font-size:12px;color:var(--accent);padding-top:2px}
+.step .t{font-weight:600;font-size:13px}
+.eq{font-family:var(--f-num);font-size:12.5px;background:var(--sunk);border-radius:4px;padding:6px 8px;margin-top:4px;overflow-wrap:anywhere;line-height:1.6}
+.eq .r{color:var(--accent);font-weight:500}
+.note{font-size:12.5px;border-left:3px solid var(--ochre);padding:6px 10px;background:var(--sunk);border-radius:0 4px 4px 0;margin:6px 0 0}
+.note.bad{border-left-color:var(--bad)}
+.tbl-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:12.5px}
+th,td{padding:5px 7px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+th{font-weight:600;color:var(--muted);font-size:11.5px;background:var(--sunk);position:sticky;top:0}
+td:first-child,th:first-child{text-align:left}
+td.num,.num{font-family:var(--f-num);font-variant-numeric:tabular-nums}
+tr.sel td{background:var(--accent-soft)}
+tbody tr.pick{cursor:pointer}
+tbody tr.pick:hover td{background:var(--sunk)}
+.pill{display:inline-block;padding:1px 8px;border-radius:99px;font-size:11.5px;font-weight:600}
+.pill.ok{background:var(--ok-soft);color:var(--ok)}
+.pill.bad{background:var(--bad-soft);color:var(--bad)}
+.pill.neu{background:var(--sunk);color:var(--muted)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.lookup td.hit{background:var(--accent-soft);color:var(--accent);font-weight:600}
+.lookup td.fix{text-decoration:underline dotted var(--ochre);text-underline-offset:3px}
+svg text{font-family:var(--f-ui)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:4px}
+.legend i{display:inline-block;width:18px;height:3px;vertical-align:middle;margin-right:5px}
+footer.cred{margin-top:28px;padding-top:12px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+
+/* ===== Thuyết minh (khổ A4) ===== */
+.sheet-wrap{overflow-x:auto;margin-top:18px}
+#report{position:relative;background:#fff;color:#111;width:210mm;max-width:none;margin:0 auto;padding:14mm 14mm 16mm;font-family:var(--f-doc);font-size:10pt;line-height:1.38;box-shadow:0 1px 4px rgba(0,0,0,.18);overflow:hidden}
+#report .wm{position:absolute;inset:0;pointer-events:none;background-repeat:repeat;opacity:1;z-index:0}
+#report > *:not(.wm){position:relative;z-index:1}
+#report .titleblk{display:grid;grid-template-columns:1fr auto;gap:2mm 6mm;align-items:end;border-bottom:1.2pt solid #1d5c86;padding-bottom:2mm;margin-bottom:1mm}
+#report h1{font-family:var(--f-ui);font-size:14pt;margin:0;text-transform:uppercase;letter-spacing:.02em;color:#123f5e}
+#report .sub{font-size:9.5pt;color:#333;margin:.8mm 0 0}
+#report .meta{font-family:var(--f-ui);font-size:8.5pt;color:#333;text-align:right;line-height:1.5}
+#report h2{font-family:var(--f-ui);font-size:10.8pt;margin:4mm 0 1.5mm;border-bottom:.6pt solid #333;padding-bottom:.8mm}
+#report h3{font-family:var(--f-ui);font-size:9.8pt;margin:2.6mm 0 1mm}
+#report table{font-size:8.8pt;margin:1.2mm 0;width:100%}
+#report th{background:#eef1f1;color:#222;position:static}
+#report th,#report td{border:.5pt solid #999;padding:.7mm 1.6mm;white-space:normal}
+#report .f{font-family:var(--f-num);font-size:8.4pt;line-height:1.45;background:#f3f5f5;padding:1.1mm 2.2mm;margin:.8mm 0 1.4mm;border-left:2pt solid #1d5c86;white-space:pre-wrap}
+#report p{margin:.9mm 0}
+#report .cap{font-size:9pt;margin:1.5mm 0 .5mm}
+#report .note9{font-size:8.6pt;color:#333;margin:.6mm 0 0}
+#report .res{font-weight:600}
+#report .figrow{display:grid;grid-template-columns:1fr 1fr;gap:5mm;align-items:start}
+#report .sign{display:grid;grid-template-columns:1fr 1fr;gap:6mm;text-align:center;font-family:var(--f-ui);font-size:9pt;margin-top:5mm}
+#report .sign b{display:block;margin-bottom:18mm}
+#report .foot{margin-top:5mm;font-size:7.8pt;color:#444;border-top:.5pt solid #999;padding-top:1.5mm}
+#report .ok{color:#1f6b3e;font-weight:600} #report .bad{color:#a5281c;font-weight:600}
+#report svg text{font-family:"Be Vietnam Pro",Arial,sans-serif}
+/* xem trước trên màn hình: vạch ngắt trang */
+@media screen{#report .pb{margin-top:10mm;position:relative}
+  #report .pb::before{content:var(--pb-label,"— trang mới —");position:absolute;left:-14mm;right:-14mm;top:-6mm;border-top:1px dashed #9aa;font:8pt var(--f-ui);color:#789;text-align:center;line-height:0}}
+.print-note{font-size:12.5px;color:var(--muted);margin-top:10px}
+
+@media print{
+  @page{size:A4;margin:13mm 14mm 14mm;
+    @top-left{content:"Thuyết minh tính toán cống";font:8pt "Be Vietnam Pro",Arial,sans-serif;color:#567}
+    @top-right{content:"TCVN 9845:2013";font:8pt "Be Vietnam Pro",Arial,sans-serif;color:#567}
+    @bottom-left{content:"© TS. Đặng Minh Tân — Trường ĐH Giao thông Vận tải";font:7.5pt "Be Vietnam Pro",Arial,sans-serif;color:#567}
+    @bottom-right{content:"Trang " counter(page) "/" counter(pages);font:8pt "Be Vietnam Pro",Arial,sans-serif;color:#567}}
+  @page en{size:A4;margin:13mm 14mm 14mm;
+    @top-left{content:"Culvert design calculation";font:8pt "Be Vietnam Pro",Arial,sans-serif;color:#567}
+    @top-right{content:"TCVN 9845:2013";font:8pt "Be Vietnam Pro",Arial,sans-serif;color:#567}
+    @bottom-left{content:"© Dr. Dang Minh Tan — University of Transport and Communications";font:7.5pt "Be Vietnam Pro",Arial,sans-serif;color:#567}
+    @bottom-right{content:"Page " counter(page) " of " counter(pages);font:8pt "Be Vietnam Pro",Arial,sans-serif;color:#567}}
+  html[lang="en"] #report{page:en}
+  html,body{background:#fff!important}
+  .wrap{padding:0!important;max-width:none}
+  .wrap>header,nav.tabs,#tab-q,#tab-c,#tab-t,footer.cred,.print-note{display:none!important}
+  #tab-r{display:block!important}
+  .sheet-wrap{margin:0;overflow:visible}
+  #report{box-shadow:none;margin:0;width:auto;padding:0;overflow:visible}
+  #report .wm{position:fixed;inset:-13mm -14mm -14mm;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  #report .pb{break-before:page}
+  #report h2,#report h3,#report .cap{break-after:avoid}
+  #report table,#report .f,#report svg,#report .fig,#report .sign,#report .figrow{break-inside:avoid}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <h1 data-en="Culvert design &lt;span&gt;TCVN 9845:2013&lt;/span&gt;">Tính cống <span>TCVN 9845:2013</span></h1>
+      <p data-en="Design flood by the limiting-intensity formula · Culvert hydraulics per Annex D (inlet / outlet control)">Lưu lượng lũ thiết kế theo công thức cường độ giới hạn · Thủy lực cống theo Phụ lục D (kiểm soát cửa vào / cửa ra)</p>
+    </div>
+    <div class="top-actions">
+      <button id="btnLang" type="button" aria-label="Language / Ngôn ngữ" title="Language / Ngôn ngữ">EN</button>
+      <button id="btnSample" type="button" data-en="Reload example">Nạp lại ví dụ mẫu</button>
+      <button id="btnPrint" type="button" class="primary" hidden data-en="Print report / Save PDF">In thuyết minh / Lưu PDF</button>
+    </div>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button role="tab" data-tab="q" aria-selected="true" data-en="&lt;span class=&quot;k&quot;&gt;1&lt;/span&gt;Design discharge"><span class="k">1</span>Lưu lượng thiết kế</button>
+    <button role="tab" data-tab="c" aria-selected="false" data-en="&lt;span class=&quot;k&quot;&gt;2&lt;/span&gt;Culvert selection"><span class="k">2</span>Chọn cống</button>
+    <button role="tab" data-tab="t" aria-selected="false" data-en="&lt;span class=&quot;k&quot;&gt;3&lt;/span&gt;Tables used"><span class="k">3</span>Bảng tra đã dùng</button>
+    <button role="tab" data-tab="r" aria-selected="false" data-en="&lt;span class=&quot;k&quot;&gt;4&lt;/span&gt;Report"><span class="k">4</span>Thuyết minh</button>
+  </nav>
+
+  <!-- ============ TAB 1: LƯU LƯỢNG ============ -->
+  <section id="tab-q" class="panel" role="tabpanel">
+    <form class="form" id="fq" autocomplete="off" onsubmit="return false">
+      <fieldset>
+        <legend data-en="Project">Công trình</legend>
+        <div class="row full"><input type="text" id="prj" value="Cống tại Km 12+450 — Tuyến đường ví dụ" aria-label="Tên công trình"></div>
+        <div class="chk"><input type="checkbox" id="qDirect"><label for="qDirect" data-en="Skip hydrology, enter Q directly">Bỏ qua thủy văn, nhập Q trực tiếp</label></div>
+        <div class="row" id="rowQd" hidden><label for="Qd" data-en="Design discharge Q &lt;i&gt;(m³/s)&lt;/i&gt;">Lưu lượng thiết kế Q <i>(m³/s)</i></label><input type="number" id="Qd" value="10" step="0.1"></div>
+      </fieldset>
+      <div id="hydroFields">
+      <fieldset>
+        <legend data-en="Rainfall">Mưa</legend>
+        <div class="row"><label for="P" data-en="Design frequency P &lt;i&gt;(%)&lt;/i&gt;">Tần suất thiết kế P <i>(%)</i></label><input type="number" id="P" value="4" step="1"></div>
+        <div class="row"><label for="Hp" data-en="Daily rainfall H&lt;sub&gt;P&lt;/sub&gt; &lt;i&gt;(mm)&lt;/i&gt;">Lượng mưa ngày H<sub>P</sub> <i>(mm)</i></label><input type="number" id="Hp" value="320" step="1"></div>
+        <div class="row full"><label for="region" data-en="Rainfall region (Table 3)">Vùng mưa (Bảng 3)</label><select id="region"></select></div>
+      </fieldset>
+      <fieldset>
+        <legend data-en="Catchment">Lưu vực</legend>
+        <div class="row"><label for="F" data-en="Area F &lt;i&gt;(km²)&lt;/i&gt;">Diện tích F <i>(km²)</i></label><input type="number" id="F" value="2.5" step="0.01"></div>
+        <div class="row"><label for="L" data-en="Main channel length L &lt;i&gt;(km)&lt;/i&gt;">Chiều dài lòng chính L <i>(km)</i></label><input type="number" id="L" value="2.2" step="0.01"></div>
+        <div class="row"><label for="sumL" data-en="Total tributary length Σl &lt;i&gt;(km)&lt;/i&gt;">Tổng chiều dài lòng nhánh Σl <i>(km)</i></label><input type="number" id="sumL" value="0.8" step="0.01"></div>
+        <div class="row"><label for="Jls" data-en="Main channel slope J&lt;sub&gt;ls&lt;/sub&gt; &lt;i&gt;(‰)&lt;/i&gt;">Độ dốc lòng chính J<sub>ls</sub> <i>(‰)</i></label><input type="number" id="Jls" value="25" step="0.1"></div>
+        <div class="row"><label for="Jsd" data-en="Hillslope gradient J&lt;sub&gt;sd&lt;/sub&gt; &lt;i&gt;(‰)&lt;/i&gt;">Độ dốc sườn dốc J<sub>sd</sub> <i>(‰)</i></label><input type="number" id="Jsd" value="120" step="1"></div>
+        <div class="chk"><input type="checkbox" id="oneSide"><label for="oneSide" data-en="One-sided catchment (factor 0.9 instead of 1.8)">Lưu vực một sườn dốc (hệ số 0,9 thay 1,8)</label></div>
+        <div class="chk"><input type="checkbox" id="noChannel"><label for="noChannel" data-en="No defined channel (φ&lt;sub&gt;ls&lt;/sub&gt; = 0)">Lòng sông không rõ ràng (φ<sub>ls</sub> = 0)</label></div>
+      </fieldset>
+      <fieldset>
+        <legend data-en="Soil and surface cover">Đất và mặt phủ</legend>
+        <div class="row"><label for="capMode" data-en="Soil class from">Xác định cấp đất theo</label><select id="capMode"><option value="cap" data-en="Select class">Chọn cấp</option><option value="sand" data-en="Sand content">Hàm lượng cát</option></select></div>
+        <div class="row" id="rowCap"><label for="cap" data-en="Soil class (Table 2)">Cấp đất (Bảng 2)</label><select id="cap"><option>I</option><option>II</option><option selected>III</option><option>IV</option><option>V</option><option>VI</option></select></div>
+        <div class="row" id="rowSand" hidden><label for="sand" data-en="Sand content &lt;i&gt;(%)&lt;/i&gt;">Hàm lượng cát <i>(%)</i></label><input type="number" id="sand" value="20" step="1"></div>
+        <div class="row full"><label for="msdRow" data-en="Hillslope — m&lt;sub&gt;sd&lt;/sub&gt; (Table 4)">Sườn dốc — m<sub>sd</sub> (Bảng 4)</label><select id="msdRow"></select></div>
+        <div class="row"><label for="msdCase" data-en="Grass cover">Mức độ cỏ</label><select id="msdCase"></select></div>
+        <div class="row full"><label for="mlsRow" data-en="Channel — m&lt;sub&gt;ls&lt;/sub&gt; (Table 5)">Lòng sông — m<sub>ls</sub> (Bảng 5)</label><select id="mlsRow"></select></div>
+      </fieldset>
+      <fieldset>
+        <legend data-en="Lakes and swamps (Table 6)">Hồ ao, đầm lầy (Bảng 6)</legend>
+        <div class="row"><label for="lakePct" data-en="Area share &lt;i&gt;(%)&lt;/i&gt;">Tỷ lệ diện tích <i>(%)</i></label><input type="number" id="lakePct" value="0" step="0.5"></div>
+        <div class="row"><label for="lakePos" data-en="Position">Vị trí</label><select id="lakePos"><option value="ha" data-en="Downstream">Ở hạ lưu</option><option value="thuong" data-en="Upstream">Ở thượng lưu</option></select></div>
+      </fieldset>
+      <fieldset>
+        <legend data-en="Runoff coefficient φ (Table A.1)">Hệ số dòng chảy φ (Bảng A.1)</legend>
+        <div class="row full"><label for="a1col" data-en="Area column used for lookup">Cột diện tích dùng để tra</label><select id="a1col"></select></div>
+        <div class="row"><label for="phiManual" data-en="Enter φ directly &lt;i&gt;(blank = table lookup)&lt;/i&gt;">Nhập φ trực tiếp <i>(để trống = tra bảng)</i></label><input type="number" id="phiManual" step="0.01" placeholder="tra bảng"></div>
+        <p class="hint" data-en="The original Table A.1 has 13 coefficient columns but its header only defines 5 F groups. The app spreads the sub-columns evenly on a log scale within each group; choose another column if your office uses a different convention.">Bảng A.1 gốc có 13 cột hệ số nhưng tiêu đề chỉ chia 5 nhóm F. App chia đều các cột con theo thang log trong mỗi nhóm; có thể chọn cột khác nếu đơn vị có quy ước riêng.</p>
+      </fieldset>
+      </div>
+    </form>
+    <div class="out" id="outQ"></div>
+  </section>
+
+  <!-- ============ TAB 2: CHỌN CỐNG ============ -->
+  <section id="tab-c" class="panel" role="tabpanel" hidden>
+    <form class="form" id="fc" autocomplete="off" onsubmit="return false">
+      <fieldset>
+        <legend data-en="Culvert types considered">Loại cống xét chọn</legend>
+        <div class="row"><label for="shapes" data-en="Shape">Hình dạng</label><select id="shapes"><option value="circ,box" data-en="Pipe and box">Tròn và hộp</option><option value="circ" data-en="Pipes only">Chỉ cống tròn</option><option value="box" data-en="Boxes only">Chỉ cống hộp</option></select></div>
+        <div class="row full"><label for="inletCirc" data-en="Pipe inlet (chart)">Cửa vào cống tròn (toán đồ)</label><select id="inletCirc"></select></div>
+        <div class="row full"><label for="inletBox" data-en="Box inlet (chart)">Cửa vào cống hộp (toán đồ)</label><select id="inletBox"></select></div>
+        <div class="row"><label for="nCirc" data-en="Manning n — pipe">Hệ số nhám n — cống tròn</label><input type="number" id="nCirc" value="0.013" step="0.001"></div>
+        <div class="row"><label for="nBox" data-en="Manning n — box">Hệ số nhám n — cống hộp</label><input type="number" id="nBox" value="0.013" step="0.001"></div>
+        <div class="row"><label for="maxN" data-en="Maximum barrels">Số cửa tối đa</label><select id="maxN"><option>1</option><option>2</option><option selected>3</option></select></div>
+        <div class="row"><label for="minD" data-en="Minimum diameter &lt;i&gt;(m)&lt;/i&gt;">Đường kính tối thiểu <i>(m)</i></label><select id="minD"><option value="0.75">0,75</option><option value="1" selected>1,00</option><option value="1.25">1,25</option><option value="1.5">1,50</option></select></div>
+      </fieldset>
+      <fieldset>
+        <legend data-en="Barrel and roadway">Thân cống</legend>
+        <div class="row"><label for="Bn" data-en="Roadbed width B &lt;i&gt;(m, shoulder to shoulder)&lt;/i&gt;">Bề rộng nền đường B <i>(m, vai – vai)</i></label><input type="number" id="Bn" value="9" step="0.5"></div>
+        <div class="row"><label for="Bm" data-en="Carriageway width B&lt;sub&gt;m&lt;/sub&gt; &lt;i&gt;(m)&lt;/i&gt;">Bề rộng mặt đường B<sub>m</sub> <i>(m)</i></label><input type="number" id="Bm" value="7" step="0.5"></div>
+        <div class="row"><label for="im" data-en="Carriageway crossfall &lt;i&gt;(%)&lt;/i&gt;">Dốc ngang mặt đường <i>(%)</i></label><input type="number" id="im" value="2" step="0.5"></div>
+        <div class="row"><label for="il" data-en="Shoulder crossfall &lt;i&gt;(%)&lt;/i&gt;">Dốc ngang lề đất <i>(%)</i></label><input type="number" id="il" value="4" step="0.5"></div>
+        <div class="row"><label for="hA" data-en="Pavement thickness &lt;i&gt;(m)&lt;/i&gt;">Chiều dày áo đường <i>(m)</i></label><input type="number" id="hA" value="0.6" step="0.05"></div>
+        <div class="row"><label for="mtl" data-en="Fill side slope 1 : m">Mái taluy nền đắp 1 : m</label><input type="number" id="mtl" value="1.5" step="0.25"></div>
+        <div class="row"><label for="ic" data-en="Culvert slope i &lt;i&gt;(%)&lt;/i&gt;">Độ dốc đặt cống i <i>(%)</i></label><input type="number" id="ic" value="1" step="0.1"></div>
+        <div class="chk"><input type="checkbox" id="Lauto" checked><label for="Lauto" data-en="Derive culvert length from roadbed width and side slopes">Tính chiều dài cống theo bề rộng nền và mái taluy</label></div>
+        <div class="row" id="rowLc" hidden><label for="Lc" data-en="Culvert length L &lt;i&gt;(m, manual)&lt;/i&gt;">Chiều dài cống L <i>(m, nhập tay)</i></label><input type="number" id="Lc" value="14" step="0.5"></div>
+        <p class="hint" id="Lhint"></p>
+      </fieldset>
+      <fieldset>
+        <legend data-en="Inlet and outlet works">Cấu tạo cửa cống</legend>
+        <div class="row"><label for="la" data-en="Upstream apron &lt;i&gt;(m)&lt;/i&gt;">Sân cống thượng lưu <i>(m)</i></label><input type="number" id="la" value="2" step="0.5"></div>
+        <div class="row"><label for="lb" data-en="Downstream protection &lt;i&gt;(m)&lt;/i&gt;">Gia cố hạ lưu <i>(m)</i></label><input type="number" id="lb" value="4" step="0.5"></div>
+        <div class="row"><label for="dk" data-en="Cut-off wall depth &lt;i&gt;(m)&lt;/i&gt;">Chiều sâu chân khay <i>(m)</i></label><input type="number" id="dk" value="1" step="0.1"></div>
+        <p class="hint" data-en="Headwalls and wingwalls are drawn from the inlet type chosen above (flared, parallel or in-line wingwalls, skewed headwall, projecting or mitered end).">Tường đầu, tường cánh vẽ theo loại cửa vào đã chọn ở trên (tường cánh xiên, song song, thẳng hàng tường đầu, tường đầu xiên, cửa nhô ra hoặc cắt vát theo mái).</p>
+      </fieldset>
+      <fieldset>
+        <legend data-en="Tailwater TW">Mực nước hạ lưu TW</legend>
+        <div class="row"><label for="twMode" data-en="Method">Cách xác định</label><select id="twMode"><option value="ch" data-en="Normal depth in downstream channel">Chảy đều trong suối hạ lưu</option><option value="in" data-en="Enter directly">Nhập trực tiếp</option></select></div>
+        <div id="twCh">
+          <div class="row"><label for="chb" data-en="Channel bottom width b &lt;i&gt;(m)&lt;/i&gt;">Bề rộng đáy suối b <i>(m)</i></label><input type="number" id="chb" value="3" step="0.1"></div>
+          <div class="row"><label for="chm" data-en="Side slope m">Hệ số mái m</label><input type="number" id="chm" value="1.5" step="0.1"></div>
+          <div class="row"><label for="chn" data-en="Channel Manning n">Hệ số nhám suối n</label><input type="number" id="chn" value="0.04" step="0.005"></div>
+          <div class="row"><label for="chi" data-en="Channel slope &lt;i&gt;(%)&lt;/i&gt;">Độ dốc suối <i>(%)</i></label><input type="number" id="chi" value="1.5" step="0.1"></div>
+        </div>
+        <div class="row" id="rowTW" hidden><label for="TW" data-en="TW depth &lt;i&gt;(m)&lt;/i&gt;">Chiều sâu TW <i>(m)</i></label><input type="number" id="TW" value="0.6" step="0.05"></div>
+      </fieldset>
+      <fieldset>
+        <legend data-en="Design checks">Điều kiện kiểm tra</legend>
+        <div class="row"><label for="hwd" data-en="Maximum HW/D">HW/D tối đa</label><input type="number" id="hwd" value="1.2" step="0.05"></div>
+        <div class="row"><label for="Zv" data-en="Inlet invert level &lt;i&gt;(m)&lt;/i&gt;">Cao độ đáy cửa vào <i>(m)</i></label><input type="number" id="Zv" value="100" step="0.01"></div>
+        <div class="row"><label for="Zvai" data-en="Design shoulder level &lt;i&gt;(m, blank if unknown)&lt;/i&gt;">Cao độ vai đường thiết kế <i>(m, để trống nếu chưa có)</i></label><input type="number" id="Zvai" step="0.01" placeholder="—"></div>
+        <div class="row"><label for="dFree" data-en="Shoulder above headwater ≥ &lt;i&gt;(m)&lt;/i&gt;">Vai đường cao hơn mực nước dâng ≥ <i>(m)</i></label><input type="number" id="dFree" value="0.5" step="0.1"></div>
+        <div class="row"><label for="cover" data-en="Fill from culvert top to pavement base ≥ &lt;i&gt;(m)&lt;/i&gt;">Đắp từ đỉnh cống đến đáy áo đường ≥ <i>(m)</i></label><input type="number" id="cover" value="0.5" step="0.1"></div>
+        <div class="row full"><label for="vcp" data-en="Outlet protection — V&lt;sub&gt;cp&lt;/sub&gt; (Table 10)">Gia cố hạ lưu — V<sub>cp</sub> (Bảng 10)</label><select id="vcp"></select></div>
+      </fieldset>
+    </form>
+    <div class="out" id="outC"></div>
+  </section>
+
+  <!-- ============ TAB 3: BẢNG TRA ============ -->
+  <section id="tab-t" role="tabpanel" hidden>
+    <div class="out" id="outT" style="margin-top:18px"></div>
+  </section>
+
+  <!-- ============ TAB 4: THUYẾT MINH ============ -->
+  <section id="tab-r" role="tabpanel" hidden>
+    <p class="print-note" id="printNote"></p>
+    <div class="sheet-wrap"><div id="report"></div></div>
+  </section>
+
+  <footer class="cred" data-en="© Dr. Dang Minh Tan · Department of Highway and Airfield Engineering | Faculty of Civil and Environmental Engineering | University of Transport and Communications. A teaching and research tool; the designer is responsible for checking inputs and results.">© TS. Đặng Minh Tân · Bộ môn Đường bộ – Sân bay | Khoa Công trình và Môi trường | Trường Đại học Giao thông Vận tải. Công cụ phục vụ giảng dạy và nghiên cứu; người thiết kế chịu trách nhiệm kiểm tra số liệu đầu vào và kết quả.</footer>
+</div>
+
+<script src="core.js"></script>
+<script>
+(function(){
+'use strict';
+const C = window.CongCore, f = C.fmt;
+const $ = id => document.getElementById(id);
+const num = id => { const v = $(id).value; return v === '' ? NaN : +v; };
+const T = (vi, en) => (C.getLang() === 'en' ? en : vi);
+const Tr = T;
+const cf = v => C.getLang() === 'en' ? String(v) : String(v).replace('.', ',');
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const framed = (() => { try { return window.self !== window.top; } catch(e) { return true; } })();
+
+/* ---------- khởi tạo danh sách chọn ---------- */
+function fillSelects(){
+  const keep = {}; ['region','msdRow','msdCase','mlsRow','a1col','inletCirc','inletBox','vcp'].forEach(id => keep[id] = $(id).value);
+  $('region').innerHTML = C.REGIONS.map(r => `<option value="${r}"${r==='VIII'?' selected':''}>${r} — ${esc(C.regionName(r))}</option>`).join('');
+  $('msdRow').innerHTML = C.MSD.rows.map((r,i) => `<option value="${i}"${i===2?' selected':''}>${esc(T(r.name, r.en))}</option>`).join('');
+  $('msdCase').innerHTML = C.MSD.cases.map((c,i) => `<option value="${i}"${i===1?' selected':''}>${T(c, C.MSD.casesEn[i])}</option>`).join('');
+  $('mlsRow').innerHTML = C.MLS.map((r,i) => `<option value="${i}"${i===1?' selected':''}>${r.v} — ${esc(T(r.name, r.en))}</option>`).join('');
+  $('a1col').innerHTML = `<option value="">${T('Tự động theo F', 'Automatic from F')}</option>` + C.A1_COLS.map(c => `<option value="${c.idx}">${esc(c.label)} · ${T('nhóm', 'group')} ${esc(c.group)}</option>`).join('');
+  $('inletCirc').innerHTML = C.INLETS.filter(x => x.shape==='circ').map(x => `<option value="${x.id}">${x.chart} · ${esc(C.inletName(x))}</option>`).join('');
+  $('inletBox').innerHTML = C.INLETS.filter(x => x.shape==='box').map(x => `<option value="${x.id}">${x.chart} · ${esc(C.inletName(x))}</option>`).join('');
+  $('vcp').innerHTML = C.VCP.rows.map(r => `<option value="${r.id}"${r.id==='dck-25'?' selected':''}>${esc(T(r.name, r.en))}</option>`).join('');
+  Object.entries(keep).forEach(([id, v]) => { if (v !== '' && [...$(id).options].some(o => o.value === v)) $(id).value = v; else if (id === 'a1col') $(id).value = v; });
+}
+fillSelects();
+
+/* ---------- thẻ ---------- */
+let curTab = 'q';
+document.querySelectorAll('nav.tabs button').forEach(b => b.addEventListener('click', () => showTab(b.dataset.tab)));
+function showTab(t){
+  curTab = t;
+  document.querySelectorAll('nav.tabs button').forEach(b => b.setAttribute('aria-selected', b.dataset.tab===t));
+  ['q','c','t','r'].forEach(k => $('tab-'+k).hidden = k!==t);
+  try { localStorage.setItem('cong-tab', t); } catch(e) {}
+}
+$('btnPrint').hidden = framed;
+$('btnPrint').addEventListener('click', () => { render(); window.print(); });
+function setPrintNote(){ $('printNote').textContent = framed
+  ? T('Bản xem trước khổ A4. Trình xem này không cho mở hộp thoại in; khi mở app trên GitHub Pages hoặc trên máy, dùng nút "In thuyết minh / Lưu PDF" (khổ A4, lề "Mặc định", bật "Đồ họa nền").', 'A4 preview. This viewer cannot open the print dialog; when the app runs from GitHub Pages or a local file, use "Print report / Save PDF" (A4, margins "Default", enable "Background graphics").')
+  : T('Bản xem trước khổ A4. Bấm "In thuyết minh / Lưu PDF", chọn "Lưu dưới dạng PDF", khổ A4, lề "Mặc định" và bật "Đồ họa nền" để giữ nền mờ bản quyền.', 'A4 preview. Click "Print report / Save PDF", choose "Save as PDF", A4, margins "Default" and enable "Background graphics" to keep the copyright watermark.'); }
+
+/* ---------- ẩn/hiện ---------- */
+function syncVis(){
+  $('rowQd').hidden = !$('qDirect').checked;
+  $('hydroFields').hidden = $('qDirect').checked;
+  $('rowCap').hidden = $('capMode').value !== 'cap';
+  $('rowSand').hidden = $('capMode').value !== 'sand';
+  $('twCh').hidden = $('twMode').value !== 'ch';
+  $('rowTW').hidden = $('twMode').value !== 'in';
+  $('rowLc').hidden = $('Lauto').checked;
+}
+$('inletCirc').addEventListener('change', () => { const x = C.inletById($('inletCirc').value); $('nCirc').value = x.n || 0.013; });
+
+let selKey = null; // phương án người dùng chọn
+let state = {};
+
+function hydroInputs(){
+  const mr = C.MSD.rows[+$('msdRow').value];
+  return {
+    F:num('F'), L:num('L'), sumL:num('sumL')||0, Jls:num('Jls'), Jsd:num('Jsd'), Hp:num('Hp'),
+    region:$('region').value, capMode:$('capMode').value, cap:$('cap').value, sand:num('sand'),
+    msd: mr.v[+$('msdCase').value], msdName: T(mr.name, mr.en), msdCase: T(C.MSD.cases[+$('msdCase').value], C.MSD.casesEn[+$('msdCase').value]),
+    mls: C.MLS[+$('mlsRow').value].v, mlsName: T(C.MLS[+$('mlsRow').value].name, C.MLS[+$('mlsRow').value].en),
+    lakePct:num('lakePct')||0, lakePos:$('lakePos').value, oneSide:$('oneSide').checked, noChannel:$('noChannel').checked,
+    a1col: $('a1col').value === '' ? null : +$('a1col').value, phiManual: $('phiManual').value, P:num('P')
+  };
+}
+function twFor(Q){
+  if ($('twMode').value === 'in') return num('TW') || 0;
+  return C.channelNormalDepth(Q, num('chb'), num('chm'), num('chn'), num('chi')/100);
+}
+
+/* ================= TÍNH ================= */
+function compute(){
+  const st = { prj: $('prj').value };
+  if ($('qDirect').checked) { st.direct = true; st.Q = num('Qd'); }
+  else { st.hin = hydroInputs(); st.h = C.flood(st.hin); st.Q = st.h.error ? NaN : st.h.Q; }
+  const Q = st.Q;
+  st.copt = {
+    S: num('ic')/100, L: num('Lc'), TW: twFor(Q), hwRatioMax: num('hwd') || 1.2, vcpId: $('vcp').value,
+    shapes: $('shapes').value.split(','), inletCirc: $('inletCirc').value, inletBox: $('inletBox').value,
+    nCirc: num('nCirc'), nBox: num('nBox'), maxN: +$('maxN').value, minD: +$('minD').value
+  };
+  st.Zv = num('Zv'); st.Zvai = num('Zvai'); st.dFree = num('dFree') || 0.5; st.cover = num('cover') || 0.5;
+  st.Bn = num('Bn') || 9; st.mtl = num('mtl') || 1.5; st.Lauto = $('Lauto').checked;
+  st.Bm = Math.min(isFinite(num('Bm')) ? num('Bm') : 7, st.Bn); st.bl = (st.Bn - st.Bm) / 2;
+  st.im = (num('im') || 0) / 100; st.il = (num('il') || 0) / 100; st.hA = isFinite(num('hA')) ? num('hA') : 0.6;
+  st.la = num('la') || 0; st.lb = num('lb') || 0; st.dk = isFinite(num('dk')) ? num('dk') : 1;
+  // cao độ vai tối thiểu để đắp trên đỉnh cống (tới đáy áo đường tại mép mặt đường) ≥ cover
+  st.dCover = st.cover + st.hA - st.bl * st.il;
+  st.copt.HWmax = isFinite(st.Zvai) ? st.Zvai - st.dFree - st.Zv : 0;
+  // Chiều dài cống theo bề rộng nền: hai đầu cống tại giao điểm mái taluy với đỉnh cống
+  // L = B + m·h_vào + m·(h_vào + i·L)  →  L = (B + 2m·h_vào) / (1 − m·i),  h_vào = Z_vai − Z_đỉnh cống tại cửa vào
+  const zRoadOf = (cv, HW) => isFinite(st.Zvai) ? st.Zvai : Math.max(st.Zv + HW + st.dFree, st.Zv + C.rise(cv) + wallOf(cv) + st.dCover);
+  // Mái taluy gặp cống tại: đỉnh tường đầu (cửa có tường đầu), đỉnh ống (cửa nhô ra, cộng đoạn nhô e), đáy ống (cắt vát theo mái)
+  st.Lgeo = (cv, HW) => {
+    const ztop = st.Zv + C.rise(cv) + wallOf(cv), sk = structOf(cv.inlet);
+    const zMeet = sk.mitre ? st.Zv : sk.head ? ztop + CAP : ztop, ext = sk.proj ? PROJ : 0;
+    const zr = Math.min(zRoadOf(cv, HW), ztop + 15), h = Math.max(0, zr - zMeet); // chặn phân kỳ với phương án quá nhỏ
+    return { L: (st.Bn + 2 * st.mtl * h + 2 * ext) / Math.max(0.05, 1 - st.mtl * st.copt.S), h, ztop, zr, zMeet, ext };
+  };
+  if (st.Lauto) { st.copt.L = st.Bn; st.copt.Lfn = (cv, r) => st.Lgeo(cv, r.HW).L; }
+  if (isFinite(Q) && Q > 0) {
+    st.list = C.selectCulverts(Q, st.copt);
+    const key = r => r.label + '|' + r.cv.inlet;
+    let pick = selKey && st.list.find(r => key(r) === selKey);
+    if (!pick) { pick = st.list.find(r => r.ok) || st.list.slice().sort((a, b) => a.HW - b.HW)[0]; }
+    st.pick = pick; st.pickKey = key(pick);
+    // cao độ
+    const t = wallOf(pick.cv);
+    st.wall = t;
+    st.Zhw = st.Zv + pick.HW;
+    st.Zmin1 = st.Zhw + st.dFree;
+    st.Zmin2 = st.Zv + pick.D + t + st.dCover;
+    st.Zmin = Math.max(st.Zmin1, st.Zmin2);
+    st.L = pick.L;
+    st.Zout = st.Zv - st.copt.S * st.L;
+    st.geo = st.Lgeo(pick.cv, pick.HW);
+    st.zRoad = st.geo.zr;
+    st.Lneed = st.geo.L;
+  }
+  return st;
+}
+function wallOf(cv){ return cv.shape === 'circ' ? Math.max(0.08, 0.1 * cv.D) : Math.max(0.2, 0.1 * cv.H); }
+
+/* ================= HIỂN THỊ TAB 1 ================= */
+function renderQ(st){
+  const o = $('outQ');
+  if (st.direct) { o.innerHTML = `<div class="headline"><div class="kv"><span class="lbl">${T('Lưu lượng thiết kế (nhập trực tiếp)', 'Design discharge (entered directly)')}</span><span class="big">${f(st.Q,2)} m³/s</span></div></div>`; return; }
+  const h = st.h, I = st.hin;
+  if (h.error) { o.innerHTML = `<div class="note bad">${esc(h.error)}</div>`; return; }
+  const notes = h.notes.map(n => `<div class="note">${esc(n)}</div>`).join('');
+  o.innerHTML = `
+  <div class="headline">
+    <div class="kv"><span class="lbl">${T('Lưu lượng đỉnh lũ', 'Peak flood discharge')} Q<sub>${f(I.P,0)}%</sub></span><span class="big">${f(h.Q,2)} m³/s</span></div>
+    <div class="kv"><span class="lbl">A<sub>P</sub></span><b>${f(h.Ap,4)}</b></div>
+    <div class="kv"><span class="lbl">φ</span><b>${f(h.phi,3)}</b></div>
+    <div class="kv"><span class="lbl">τ<sub>sd</sub> (${T('phút', 'min')})</span><b>${f(h.tau,1)}</b></div>
+    <div class="kv"><span class="lbl">δ</span><b>${f(h.delta,2)}</b></div>
+  </div>
+  ${notes}
+  <div class="card"><h3>${T('Trình tự tính theo mục 5.2.2', 'Calculation steps per clause 5.2.2')}</h3>
+    <div class="step"><span class="n">1</span><div><div class="t">${T('Chiều dài bình quân sườn dốc — công thức (1)', 'Mean hillslope length — Eq. (1)')}</div>
+      <div class="eq">L<sub>sd</sub> = 1000·F / [${f(h.k18,1)}·(L + Σl)] = 1000×${f(I.F,3)} / [${f(h.k18,1)}×(${f(I.L,2)} + ${f(I.sumL,2)})] = <span class="r">${f(h.Lsd,1)} m</span></div></div></div>
+    <div class="step"><span class="n">2</span><div><div class="t">${T('Hệ số dòng chảy φ — Bảng A.1', 'Runoff coefficient φ — Table A.1')}</div>
+      <div class="eq">${T('Cấp đất', 'Soil class')} ${h.a1.cap}${I.capMode==='sand'?` (${T('cát', 'sand')} ${f(I.sand,0)}% → ${T('Bảng 1', 'Table 1')})`:''} · H<sub>P</sub> = ${f(I.Hp,0)} mm → ${T('hàng', 'row')} "${esc(h.a1.band)}" · ${esc(h.a1.colInfo.label)} → φ = <span class="r">${f(h.a1.phi,3)}</span>${h.phiSource==='manual'?` · ${T('dùng φ nhập tay', 'using entered φ')} = <span class="r">${f(h.phi,3)}</span>`:''}</div></div></div>
+    <div class="step"><span class="n">3</span><div><div class="t">${T('Hệ số địa mạo thủy văn sườn dốc — công thức (9)', 'Hillslope hydro-morphological factor — Eq. (9)')}</div>
+      <div class="eq">φ<sub>sd</sub> = L<sub>sd</sub><sup>0,6</sup> / [m<sub>sd</sub>·J<sub>sd</sub><sup>0,3</sup>·(φH<sub>P</sub>)<sup>0,4</sup>] = ${f(h.Lsd,1)}<sup>0,6</sup> / [${f(h.msd,2)}×${f(I.Jsd,1)}<sup>0,3</sup>×(${f(h.phi*I.Hp,1)})<sup>0,4</sup>] = <span class="r">${f(h.phiSd,2)}</span></div></div></div>
+    <div class="step"><span class="n">4</span><div><div class="t">${T('Thời gian tập trung nước trên sườn dốc — Bảng A.2, vùng', 'Hillslope concentration time — Table A.2, region')} ${I.region}</div>
+      <div class="eq">φ<sub>sd</sub> ∈ [${f(h.ta.x0,1)}; ${f(h.ta.x1,1)}] → τ<sub>sd</sub> ∈ [${f(h.ta.y0,1)}; ${f(h.ta.y1,1)}] → ${T('nội suy', 'interpolated')} τ<sub>sd</sub> = <span class="r">${f(h.tau,1)} ${T('phút', 'min')}</span></div></div></div>
+    <div class="step"><span class="n">5</span><div><div class="t">${T('Đặc trưng địa mạo thủy văn lòng sông — công thức (10)', 'Channel hydro-morphological factor — Eq. (10)')}</div>
+      <div class="eq">${I.noChannel?`${T('Lòng sông không rõ ràng', 'No defined channel')} → φ<sub>ls</sub> = <span class="r">0</span>`:`φ<sub>ls</sub> = 1000·L / [m<sub>ls</sub>·J<sub>ls</sub><sup>1/3</sup>·F<sup>1/4</sup>·(φH<sub>P</sub>)<sup>1/4</sup>] = 1000×${f(I.L,2)} / [${h.mls}×${f(I.Jls,1)}<sup>1/3</sup>×${f(I.F,3)}<sup>1/4</sup>×${f(h.phi*I.Hp,1)}<sup>1/4</sup>] = <span class="r">${f(h.phiLs,2)}</span>`}</div></div></div>
+    <div class="step"><span class="n">6</span><div><div class="t">${T('Mô đun tương đối đỉnh lũ — Bảng A.3, vùng', 'Relative peak modulus — Table A.3, region')} ${I.region}, ${T('nội suy song tuyến', 'bilinear interpolation')}</div>
+      <div class="eq">τ=${h.ap.t0}: A(${h.ap.x0})=${f(h.ap.a00,4)}, A(${h.ap.x1})=${f(h.ap.a01,4)} → ${f(h.ap.r0,4)} &nbsp;|&nbsp; τ=${h.ap.t1}: ${f(h.ap.a10,4)}, ${f(h.ap.a11,4)} → ${f(h.ap.r1,4)} &nbsp;⇒ A<sub>P</sub> = <span class="r">${f(h.Ap,4)}</span></div></div></div>
+    <div class="step"><span class="n">7</span><div><div class="t">${T('Lưu lượng đỉnh lũ — công thức (8)', 'Peak discharge — Eq. (8)')}</div>
+      <div class="eq">Q<sub>P</sub> = A<sub>P</sub>·φ·H<sub>P</sub>·F·δ = ${f(h.Ap,4)}×${f(h.phi,3)}×${f(I.Hp,0)}×${f(I.F,3)}×${f(h.delta,2)} = <span class="r">${f(h.Q,2)} m³/s</span></div></div></div>
+  </div>`;
+}
+
+/* ================= TAB 2 ================= */
+function renderC(st){
+  const o = $('outC');
+  if (!(st.Q > 0)) { o.innerHTML = `<div class="note bad">${T('Chưa có lưu lượng thiết kế hợp lệ. Kiểm tra lại thẻ 1.', 'No valid design discharge yet. Check tab 1.')}</div>`; return; }
+  const p = st.pick, O = st.copt;
+  const nOk = st.list.filter(r => r.ok).length;
+  const rows = st.list.slice(0, 40).map(r => {
+    const k = r.label + '|' + r.cv.inlet;
+    return `<tr class="pick${k===st.pickKey?' sel':''}" data-k="${esc(k)}" tabindex="0">
+      <td>${r.cv.shape==='circ'?T('Tròn','Pipe'):T('Hộp','Box')} <b class="num">${esc(r.label)}</b></td>
+      <td class="num">${f(r.area,2)}</td>
+      <td class="num">${f(r.ic.HW,2)}</td><td class="num">${f(r.oc.HW,2)}</td>
+      <td class="num"><b>${f(r.HW,2)}</b></td><td class="num">${f(r.ratio,2)}</td>
+      <td>${r.control==='inlet'?T('Cửa vào','Inlet'):T('Cửa ra','Outlet')}</td><td>${r.regime}</td>
+      <td class="num">${f(r.Vout,2)}</td>
+      <td>${r.ok?`<span class="pill ok">${T('Đạt','Pass')}</span>`:`<span class="pill bad">${T('Không đạt','Fail')}</span>`}</td></tr>`;
+  }).join('');
+  const chk = p.checks.map(c => `<li>${c.ok?`<span class="pill ok">${T('Đạt','Pass')}</span>`:`<span class="pill bad">${T('Không đạt','Fail')}</span>`} ${esc(c.text)}</li>`).join('');
+  const zChk = isFinite(st.Zvai) ? (st.Zvai >= st.Zmin - 1e-9
+     ? `<span class="pill ok">${T('Đạt','Pass')}</span> ${T('Cao độ vai đường','Shoulder level')} ${f(st.Zvai,2)} ≥ ${f(st.Zmin,2)} m`
+     : `<span class="pill bad">${T('Không đạt','Fail')}</span> ${T('Cao độ vai đường','Shoulder level')} ${f(st.Zvai,2)} < ${f(st.Zmin,2)} m`) : `<span class="pill neu">${T('Chưa nhập','Not entered')}</span> ${T('Cao độ vai đường thiết kế','Design shoulder level')}`;
+  o.innerHTML = `
+  <div class="headline">
+    <div class="kv"><span class="lbl">${T('Phương án chọn','Selected option')}</span><span class="big">${p.cv.shape==='circ'?T('Tròn ','Pipe '):T('Hộp ','Box ')}${esc(p.label)}</span></div>
+    <div class="kv"><span class="lbl">${T('Q thiết kế','Design Q')}</span><b>${f(st.Q,2)} m³/s</b></div>
+    <div class="kv"><span class="lbl">HW (m)</span><b>${f(p.HW,2)}</b></div>
+    <div class="kv"><span class="lbl">${T('Kiểm soát','Control')}</span><b>${p.control==='inlet'?T('Cửa vào','Inlet'):T('Cửa ra','Outlet')}</b></div>
+    <div class="kv"><span class="lbl">${T('Chế độ','Flow regime')}</span><b>${p.regime}</b></div>
+    <div class="kv"><span class="lbl">${T('Vai đường ≥ (m)','Shoulder ≥ (m)')}</span><b>${f(st.Zmin,2)}</b></div>
+  </div>
+  ${nOk===0?`<div class="note bad">${T('Không phương án nào trong danh mục thỏa mãn mọi điều kiện. Đang hiển thị phương án có HW nhỏ nhất; thử tăng số cửa, đổi loại cửa vào, nới HW/D hoặc chọn gia cố hạ lưu tốt hơn.', 'No option in the catalogue meets every check. The option with the lowest HW is shown; try more barrels, another inlet type, a higher HW/D limit or stronger outlet protection.')}</div>`:''}
+  ${!st.Lauto && Math.abs(st.L - st.Lneed) > 0.3 ? `<div class="note">${T(`Chiều dài cống nhập tay ${f(st.L,2)} m khác chiều dài cần theo bề rộng nền và mái taluy (${f(st.Lneed,2)} m). Bản vẽ thể hiện mái taluy theo độ dốc thực tế giữa vai đường và đầu cống.`, `The entered culvert length ${f(st.L,2)} m differs from the length required by the roadbed width and side slopes (${f(st.Lneed,2)} m). The drawing shows the actual slope between shoulder and culvert end.`)}</div>`:''}
+  ${(() => { const fl = drawFlow(st); return `<div class="card"><h3>${T('Mặt cắt ngang nền đường tại tim cống — đường mặt nước','Roadway cross-section along the culvert axis — water surface profile')}</h3><div class="tbl-wrap">${fl.svg}</div>
+    <p class="hint">${fl.desc} ${T('Nét đứt dài: chiều sâu phân giới d<sub>c</sub>; nét chấm: chiều sâu chảy đều d<sub>n</sub>. Đường mặt nước trong cống tính bằng phương pháp cộng trực tiếp.', 'Long dashes: critical depth d<sub>c</sub>; dots: normal depth d<sub>n</sub>. The barrel water surface is computed by the direct step method.')}</p></div>`; })()}
+  <div class="grid2">
+    <div class="card"><h3>${T('Chính diện cửa vào','Inlet elevation')}</h3>${drawFront(st)}</div>
+    <div class="card"><h3>${T('Bình đồ cống và cửa thu','Plan of culvert and inlet')}</h3>${drawPlan(st)}</div>
+  </div>
+  <div class="card"><h3>${T('Đường HW – Q của phương án (toán đồ riêng)','HW – Q curve of the option (own nomograph)')}</h3>${plotHWQ(st)}
+    <div class="legend"><span><i style="background:var(--accent)"></i>${T('Kiểm soát cửa vào','Inlet control')}</span><span><i style="background:var(--ochre)"></i>${T('Kiểm soát cửa ra','Outlet control')}</span><span><i style="background:var(--bad);height:1px"></i>${T('HW cho phép','Allowable HW')}</span></div></div>
+  <div class="card"><h3>${T('Kiểm tra phương án','Checks for option')} ${esc(p.label)}</h3>
+    <ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px">${chk}<li>${zChk}</li></ul>
+    <div class="step"><span class="n">a</span><div><div class="t">${T('Kiểm soát cửa vào','Inlet control')} — ${esc(p.inlet.chart)}: ${esc(C.inletName(p.inlet))}</div>
+      <div class="eq">q = Q/N = ${f(st.Q,2)}/${p.N} = ${f(p.q,3)} m³/s · K<sub>u</sub>q/(A·D<sup>0,5</sup>) = ${f(p.ic.X,2)} → ${T('vùng','zone:')} ${p.ic.zone}${p.inlet.form===1?` · d<sub>c</sub> = ${f(p.ic.dc,3)} m, H<sub>c</sub> = ${f(p.ic.Hc,3)} m`:''} → HW/D = ${f(p.ic.ratio,3)} → HW<sub>i</sub> = <span class="r">${f(p.ic.HW,3)} m</span></div></div></div>
+    <div class="step"><span class="n">b</span><div><div class="t">${T('Kiểm soát cửa ra — dòng chảy đầy (toán đồ D.7/D.8)','Outlet control — full flow (charts D.7/D.8)')}</div>
+      <div class="eq">V = ${f(p.oc.V,3)} m/s · H = (1 + k<sub>e</sub> + 2g n² L / R<sup>4/3</sup>)·V²/2g = (1 + ${f(p.oc.ke,2)} + ${f(p.oc.kf,3)})×${f(p.oc.V*p.oc.V/19.62,3)} = ${f(p.oc.H,3)} m · h<sub>o</sub> = max(TW=${f(O.TW,2)}; (d<sub>c</sub>+D)/2=${f(p.oc.hoA,2)}) = ${f(p.oc.ho,2)} m → HW<sub>o</sub> = H + h<sub>o</sub> − L·i = <span class="r">${f(p.oc.HW,3)} m</span></div></div></div>
+    <div class="step"><span class="n">c</span><div><div class="t">${T('Vận tốc cửa ra','Outlet velocity')}</div>
+      <div class="eq">${esc(p.how)}: d<sub>o</sub> = ${f(p.dout,3)} m → V<sub>o</sub> = q/A<sub>o</sub> = <span class="r">${f(p.Vout,2)} m/s</span>${p.vcp?` · V<sub>cp</sub> (${esc(p.vcp.name)}, h ≈ ${f(p.vcp.depth,1)} m) = ${f(p.vcp.v,1)} m/s`:''}</div></div></div>
+    <div class="step"><span class="n">d</span><div><div class="t">${T('Chiều dài cống','Culvert length')}</div>
+      <div class="eq">${st.Lauto?`h = Z<sub>${T('vai','sh')}</sub> − Z<sub>${T('gặp mái','meet')}</sub> = ${f(st.geo.zr,2)} − ${f(st.geo.zMeet,2)} = ${f(st.geo.h,2)} m · L = (B + 2m·h + 2e)/(1 − m·i) = (${f(st.Bn,1)} + 2×${f(st.mtl,2)}×${f(st.geo.h,2)} + 2×${f(st.geo.ext,2)})/(1 − ${f(st.mtl,2)}×${f(O.S,4)}) = <span class="r">${f(st.L,2)} m</span>`:`${T('L nhập tay','Entered L')} = <span class="r">${f(st.L,2)} m</span>; ${T('theo bề rộng nền','roadbed width')} B = ${f(st.Bn,1)} m ${T('và mái','and slope')} 1:${f(st.mtl,2)} ${T('cần','require')} L = ${f(st.Lneed,2)} m`}</div></div></div>
+    <div class="step"><span class="n">e</span><div><div class="t">${T('Cao độ','Levels')}</div>
+      <div class="eq">${T('Mực nước dâng trước cống','Headwater level')} = ${f(st.Zv,2)} + ${f(p.HW,2)} = ${f(st.Zhw,2)} m · ${T('Vai đường','Shoulder')} ≥ max(${f(st.Zhw,2)} + ${f(st.dFree,2)}; ${f(st.Zv,2)} + ${f(p.D,2)} + ${f(st.wall,2)} + ${f(st.dCover,2)}) = <span class="r">${f(st.Zmin,2)} m</span></div></div></div>
+  </div>
+  <div class="card"><h3>${T('So sánh phương án','Option comparison')} <span class="pill neu">${nOk} ${T('đạt','pass')} / ${st.list.length} ${T('xét','checked')}</span></h3>
+    <p class="hint" style="margin:0 0 8px">${T('Sắp xếp: phương án đạt trước, sau đó theo tổng diện tích cửa (chỉ tiêu kinh tế gần đúng). Bấm vào một hàng để chọn phương án.','Sorted with passing options first, then by total opening area (a rough cost index). Click a row to select an option.')}</p>
+    <div class="tbl-wrap" style="max-height:420px"><table>
+      <thead><tr><th>${T('Phương án','Option')}</th><th>ΣA (m²)</th><th>HW<sub>i</sub></th><th>HW<sub>o</sub></th><th>HW (m)</th><th>HW/D</th><th>${T('Kiểm soát','Control')}</th><th>${T('Chế độ','Regime')}</th><th>V<sub>o</sub> (m/s)</th><th>${T('Kết luận','Result')}</th></tr></thead>
+      <tbody id="candBody">${rows}</tbody></table></div>
+    <p class="hint">TW = ${f(O.TW,2)} m ${$('twMode').value==='ch'?T('(chảy đều trong suối hạ lưu với Q thiết kế)','(normal depth in the downstream channel at design Q)'):T('(nhập trực tiếp)','(entered directly)')}. ${T('Chiều dày thành cống lấy gần đúng 0,1D','Barrel wall thickness taken as about 0,1D')} (≥ ${st.pick.cv.shape==='circ'?'0,08':'0,20'} m).</p>
+  </div>`;
+  o.querySelectorAll('#candBody tr').forEach(tr => {
+    const go = () => { selKey = tr.dataset.k; render(); };
+    tr.addEventListener('click', go);
+    tr.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
+  });
+}
+
+/* ---------- SVG: đường HW–Q ---------- */
+function plotHWQ(st, print){
+  const p = st.pick, Qmax = st.Q * 1.6;
+  const curve = C.ratingCurve(p.cv, Qmax, { S: st.copt.S, L: st.L, TWfn: twFor }, 48);
+  const W = 520, H = 300, m = {l:48, r:14, t:14, b:40};
+  const hwLim = Math.min(p.D * st.copt.hwRatioMax, st.copt.HWmax > 0 ? st.copt.HWmax : Infinity);
+  const yMaxRaw = Math.max(...curve.map(c => Math.max(c.HWi, c.HWo)), hwLim * 1.15, p.HW * 1.2);
+  const yMax = niceMax(Math.min(yMaxRaw, Math.max(p.HW, hwLim) * 2.2));
+  const xMax = niceMax(Qmax);
+  const X = q => m.l + (W - m.l - m.r) * q / xMax, Y = h => H - m.b - (H - m.t - m.b) * Math.min(h, yMax) / yMax;
+  const col = print ? {ink:'#222', mut:'#666', grid:'#ddd', a:'#1d5c86', o:'#a9601a', bad:'#b23a2e'} : {ink:'var(--ink)', mut:'var(--muted)', grid:'var(--line)', a:'var(--accent)', o:'var(--ochre)', bad:'var(--bad)'};
+  let g = '';
+  ticks(xMax).forEach(t => { g += `<line x1="${X(t)}" x2="${X(t)}" y1="${m.t}" y2="${H-m.b}" stroke="${col.grid}" stroke-width="1"/><text x="${X(t)}" y="${H-m.b+15}" text-anchor="middle" font-size="11" fill="${col.mut}">${f(t, t<10?1:0)}</text>`; });
+  ticks(yMax).forEach(t => { g += `<line x1="${m.l}" x2="${W-m.r}" y1="${Y(t)}" y2="${Y(t)}" stroke="${col.grid}" stroke-width="1"/><text x="${m.l-6}" y="${Y(t)+4}" text-anchor="end" font-size="11" fill="${col.mut}">${f(t,1)}</text>`; });
+  const path = k => 'M' + curve.map(c => `${X(c.Q).toFixed(1)},${Y(c[k]).toFixed(1)}`).join('L');
+  g += `<path d="${path('HWo')}" fill="none" stroke="${col.o}" stroke-width="2" stroke-dasharray="6 4"/>`;
+  g += `<path d="${path('HWi')}" fill="none" stroke="${col.a}" stroke-width="2.2"/>`;
+  if (isFinite(hwLim)) g += `<line x1="${m.l}" x2="${W-m.r}" y1="${Y(hwLim)}" y2="${Y(hwLim)}" stroke="${col.bad}" stroke-width="1.2" stroke-dasharray="3 3"/><text x="${m.l+6}" y="${Y(hwLim)-5}" text-anchor="start" font-size="11" fill="${col.bad}">${T('HW cho phép','Allowable HW')} ${f(hwLim,2)} m</text>`;
+  g += `<line x1="${X(st.Q)}" x2="${X(st.Q)}" y1="${Y(p.HW)}" y2="${H-m.b}" stroke="${col.ink}" stroke-width="1" stroke-dasharray="2 3"/>`;
+  g += `<circle cx="${X(st.Q)}" cy="${Y(p.HW)}" r="5" fill="${col.ink}"/><text x="${X(st.Q)+8}" y="${Y(p.HW)+16}" font-size="11.5" font-weight="600" fill="${col.ink}">Q=${f(st.Q,2)}; HW=${f(p.HW,2)}</text>`;
+  g += `<text x="${(m.l+W-m.r)/2}" y="${H-6}" text-anchor="middle" font-size="11.5" fill="${col.mut}">${T('Lưu lượng Q (m³/s)','Discharge Q (m³/s)')}</text>`;
+  g += `<text transform="translate(13 ${(m.t+H-m.b)/2}) rotate(-90)" text-anchor="middle" font-size="11.5" fill="${col.mut}">HW (m)</text>`;
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="HW–Q ${esc(p.label)}" style="max-width:${W}px;display:block">${g}</svg>`;
+}
+function niceMax(v){ if (!(v>0)) return 1; const p = Math.pow(10, Math.floor(Math.log10(v))); for (const k of [1,1.5,2,2.5,3,4,5,6,8,10]) if (k*p >= v) return k*p; return 10*p; }
+function ticks(max){ const s = niceMax(max/5); const step = [1,2,2.5,5,10].map(k => k*Math.pow(10,Math.floor(Math.log10(max/5)))).find(x => x >= max/5.5) || s; const out=[]; for (let t=0; t<=max+1e-9; t+=step) out.push(+t.toFixed(6)); return out; }
+
+/* ---------- BẢN VẼ CỐNG: mặt cắt ngang nền đường, chính diện cửa vào, bình đồ ---------- */
+const CAP = 0.3;    // tường đầu cao hơn đỉnh cống (m)
+const PROJ = 0.4;   // đoạn ống nhô ra khỏi mái taluy (m)
+// Cấu tạo cửa theo loại cửa vào (góc loe tường cánh đo từ tim cống: 0° song song, 90° thẳng hàng tường đầu)
+const STRUCT = {
+  'C-SQ': { head:1, wing:45, edge:'sq',    txt:'Tường đầu + tường cánh xiên, miệng vuông', en:'Headwall + flared wingwalls, square edge' },
+  'C-GR': { head:1, wing:45, edge:'socket',txt:'Tường đầu + tường cánh xiên, đầu loe', en:'Headwall + flared wingwalls, groove end' },
+  'C-PR': { proj:1, edge:'socket',          txt:'Ống nhô ra khỏi mái taluy, đầu loe', en:'Pipe projecting from the fill slope, groove end' },
+  'C-B45':{ head:1, wing:45, edge:'bev',   txt:'Tường đầu + tường cánh, miệng vát 45°', en:'Headwall + wingwalls, 45° bevel' },
+  'C-B33':{ head:1, wing:45, edge:'bev',   txt:'Tường đầu + tường cánh, miệng vát 33,7°', en:'Headwall + wingwalls, 33.7° bevel' },
+  'M-HW': { head:1, wing:45, edge:'sq',    txt:'Tường đầu + tường cánh xiên', en:'Headwall + flared wingwalls' },
+  'M-MI': { mitre:1,                        txt:'Ống cắt vát theo mái taluy', en:'Pipe mitered to the fill slope' },
+  'M-PR': { proj:1,                         txt:'Ống nhô ra khỏi mái taluy', en:'Pipe projecting from the fill slope' },
+  'B-W30':{ head:1, wing:45,               txt:'Tường cánh loe 30°–75° (vẽ 45°)', en:'Wingwalls flared 30°–75° (drawn at 45°)' },
+  'B-W90':{ head:1, wing:90,               txt:'Tường cánh thẳng hàng tường đầu (90°)', en:'Wingwalls in line with headwall (90°)' },
+  'B-W0': { head:1, wing:0,                txt:'Tường cánh song song tim cống (0°)', en:'Wingwalls parallel to the axis (0°)' },
+  'B-CH': { head:1, wing:90, edge:'bev',   txt:'Tường đầu 90°, vát cạnh nhỏ', en:'90° headwall, small chamfers' },
+  'B-B45':{ head:1, wing:90, edge:'bev',   txt:'Tường đầu 90°, vát cạnh 45°', en:'90° headwall, 45° bevels' },
+  'B-B33':{ head:1, wing:90, edge:'bev',   txt:'Tường đầu 90°, vát cạnh 33,7°', en:'90° headwall, 33.7° bevels' },
+  'B-S45':{ head:1, wing:90, skew:45,      txt:'Tường đầu xiên 45°', en:'Headwall skewed 45°' },
+  'B-S30':{ head:1, wing:90, skew:30,      txt:'Tường đầu xiên 30°', en:'Headwall skewed 30°' },
+  'B-S15':{ head:1, wing:90, skew:15,      txt:'Tường đầu xiên 15°', en:'Headwall skewed 15°' },
+  'B-F45':{ head:1, wing:45,               txt:'Tường cánh loe 45°', en:'Wingwalls flared 45°' },
+  'B-F18':{ head:1, wing:18.4,             txt:'Tường cánh loe 18,4°', en:'Wingwalls flared 18.4°' }
+};
+function structOf(id){ return STRUCT[id] || { head:1, wing:45, txt:'Tường đầu + tường cánh', en:'Headwall + wingwalls' }; }
+const sTxt = sk => T(sk.txt, sk.en);
+
+function hwDraw(st, zc){ return Math.min(st.Zhw, zc + 0.6); }
+function culvertGeom(st){
+  const p = st.pick, cv = p.cv, sk = structOf(cv.inlet), m = st.mtl, i = st.copt.S;
+  const D = p.D, t = st.wall, N = p.N, span = cv.shape === 'circ' ? cv.D : cv.B;
+  const gap = cv.shape === 'circ' ? Math.min(0.75, Math.max(0.3, 0.5 * D)) : t;
+  const W0 = cv.shape === 'circ' ? N * (D + 2 * t) + (N - 1) * gap : N * span + (N + 1) * t;
+  const th = sk.head ? (D <= 1.25 ? 0.4 : 0.5) : 0;
+  const zTop = st.Zv + D + t, zHW = zTop + CAP;
+  const zMeet = sk.mitre ? st.Zv : sk.head ? zHW : zTop;
+  const ext = sk.proj ? PROJ : 0;
+  const zF = st.Zv - t - 0.5;
+  const Whw = W0 + 0.8;
+  const tw = 0.3;
+  const wingDeg = sk.head && sk.wing != null ? sk.wing : null;
+  const lw = wingDeg != null ? m * Math.max(0.3, zHW - (st.Zv + 0.3)) + 0.3 : 0;
+  const th_r = wingDeg == null ? 0 : wingDeg * Math.PI / 180;
+  const lwx = lw * Math.cos(th_r), lwy = lw * Math.sin(th_r);
+  // vị trí barrel theo phương ngang (tâm từng cửa)
+  const centers = [];
+  for (let k = 0; k < N; k++) {
+    const c = cv.shape === 'circ' ? -W0 / 2 + t + D / 2 + k * (D + 2 * t + gap) : -W0 / 2 + t + span / 2 + k * (span + t);
+    centers.push(c);
+  }
+  // vai đường theo trục cống
+  const L = st.L, zr = st.zRoad, B = st.Bn;
+  let xa, mIn, mOut;
+  if (st.Lauto) { xa = ext + m * Math.max(0, zr - zMeet); mIn = mOut = m; }
+  else { xa = (L - B) / 2; mIn = Math.max(0, xa - ext) / Math.max(0.01, zr - zMeet); mOut = Math.max(0, L - xa - B - ext) / Math.max(0.01, zr - zMeet + i * L); }
+  const xb = xa + B;
+  return { p, cv, sk, m, i, D, t, N, span, gap, W0, th, zTop, zHW, zMeet, ext, zF, Whw, tw, wingDeg, lw, lwx, lwy, centers, L, zr, B, xa, xb, mIn, mOut };
+}
+
+function drawPalette(print){
+  return print
+    ? { ink:'#222', mut:'#666', soil:'#e4dccb', soil2:'#d2c6ad', road:'#3a3a3a', pave:'#9c9c9c', con:'#c9c9c9', con2:'#a9a9a9', surf:'#fff', w:'#3f86b8', wfill:'rgba(63,134,184,.20)', bed:'#8a7f6a', dim:'#555', apr:'#d8d8d8', bad:'#b23a2e' }
+    : { ink:'var(--ink)', mut:'var(--muted)', soil:'var(--sunk)', soil2:'var(--line)', road:'var(--ink)', pave:'var(--muted)', con:'var(--line)', con2:'var(--muted)', surf:'var(--surface)', w:'var(--water)', wfill:'var(--accent-soft)', bed:'var(--muted)', dim:'var(--muted)', apr:'var(--line)', bad:'var(--bad)' };
+}
+const svgText = (x, y, s, o = {}) => `<text x="${x.toFixed(1)}" y="${y.toFixed(1)}" text-anchor="${o.a||'middle'}" font-size="${o.fs||11}" font-weight="${o.w||400}" fill="${o.c}"${o.rot!=null?` transform="rotate(${o.rot} ${x.toFixed(1)} ${y.toFixed(1)})"`:''}>${s}</text>`;
+function dimH(x1, x2, y, label, c){
+  return `<line x1="${x1}" x2="${x2}" y1="${y}" y2="${y}" stroke="${c}" stroke-width=".9"/>` +
+    `<line x1="${x1}" x2="${x1}" y1="${y-4}" y2="${y+4}" stroke="${c}" stroke-width=".9"/><line x1="${x2}" x2="${x2}" y1="${y-4}" y2="${y+4}" stroke="${c}" stroke-width=".9"/>` +
+    `<path d="M${x1},${y} l7,-2.5 v5 Z M${x2},${y} l-7,-2.5 v5 Z" fill="${c}"/>` +
+    svgText((x1 + x2) / 2, y - 4, label, { c, fs:10.5, w:600 });
+}
+function poly(pts, X, Y){ return pts.map((q, k) => (k ? 'L' : 'M') + X(q[0]).toFixed(1) + ',' + Y(q[1]).toFixed(1)).join(' ') + ' Z'; }
+
+/* ---------- MẶT CẮT NGANG NỀN ĐƯỜNG KIỂU HDS-5: đường mặt nước trong cống (minh họa 1 cửa) ---------- */
+// Đường mặt nước trong thân cống bằng phương pháp cộng trực tiếp (direct step)
+function wsProfile(cv, q, n, S, L, yStart, yEnd, fromOutlet){
+  const G = 9.81, D = C.rise(cv);
+  const E = y => { const g = C.geom(cv, y); const V = q / g.A; return { E: y + V * V / (2 * G), Sf: n * n * V * V / Math.pow(g.R, 4 / 3) }; };
+  const pts = [[fromOutlet ? L : 0, yStart]];
+  let x = 0, prev = E(yStart);
+  const steps = 60;
+  for (let k = 1; k <= steps; k++) {
+    const y = yStart + (yEnd - yStart) * k / steps;
+    const cur = E(y);
+    const den = S - (prev.Sf + cur.Sf) / 2;
+    if (Math.abs(den) < 1e-9) break;
+    const dx = (cur.E - prev.E) / den;
+    if (!isFinite(dx)) break;
+    x += dx;
+    const X = fromOutlet ? L + x : x;
+    if (X < 0 || X > L) { // nội suy tới biên
+      const xb = X < 0 ? 0 : L, xp = pts[pts.length - 1][0], yp = pts[pts.length - 1][1];
+      const tt = (xb - xp) / ((X - xp) || 1e-9);
+      pts.push([xb, yp + (y - yp) * tt]);
+      return pts;
+    }
+    pts.push([X, Math.min(y, D)]);
+    prev = cur;
+  }
+  // chưa tới biên: giữ chiều sâu cuối (tiệm cận chảy đều)
+  pts.push([fromOutlet ? 0 : L, pts[pts.length - 1][1]]);
+  return pts;
+}
+
+function flowCase(st){
+  const p = st.pick, cv = p.cv, q = p.q, n = p.n, S = st.copt.S, L = st.L, D = p.D, TW = st.copt.TW;
+  const dc = C.criticalDepth(cv, q), nd = C.normalDepth(cv, q, n, S), dn = nd.full ? D : nd.dn;
+  const res = { dc, dn, full:false, jump:false, pts:null, desc:'', dcX:null, inletSub: p.HW > D };
+  if (p.control === 'inlet') {
+    if (!nd.full && dn < dc * 0.999) {           // dốc lớn: qua d_c ở cửa vào, đường S2 tiến về d_n
+      const y0 = Math.min(dc, 0.97 * D);
+      res.pts = wsProfile(cv, q, n, S, L, y0 * 0.999, dn + 0.03 * (y0 - dn), false);
+      res.dcX = 0;
+      res.desc = res.inletSub
+        ? T('Kiểm soát cửa vào, cửa vào ngập: dòng chảy co hẹp ở miệng cống rồi chảy xiết trong thân cống (đường mặt nước S2 về d<sub>n</sub>).', 'Inlet control, submerged inlet: the flow contracts at the entrance and is supercritical in the barrel (S2 profile towards d<sub>n</sub>).')
+        : T('Kiểm soát cửa vào, cửa vào không ngập: mặt nước qua chiều sâu phân giới d<sub>c</sub> ngay sau miệng cống, chảy xiết trong thân cống (đường mặt nước S2 về d<sub>n</sub>).', 'Inlet control, unsubmerged inlet: the water surface passes critical depth d<sub>c</sub> just inside the entrance and is supercritical in the barrel (S2 profile towards d<sub>n</sub>).');
+    } else {
+      res.pts = [[0, Math.min(p.HW, 0.97 * D)], [L, p.dout]];
+      res.desc = T('Kiểm soát cửa vào trên dốc nhỏ: mặt nước hạ dần từ cửa vào tới cửa ra.', 'Inlet control on a mild slope: the water surface falls gradually from inlet to outlet.');
+    }
+  } else {
+    if (p.HW >= D && (p.oc.ho >= 0.98 * D || TW >= D || nd.full)) {
+      res.full = true; res.pts = [[0, D], [L, D]];
+      res.desc = T('Kiểm soát cửa ra, chảy có áp: nước đầy thân cống; đường đo áp (nét đứt) hạ từ cửa vào tới cửa ra theo tổn thất ma sát.', 'Outlet control, pressure flow: the barrel flows full; the hydraulic grade line (dashed) falls from inlet to outlet with friction loss.');
+    } else {
+      const d0 = Math.min(p.dout, D);
+      const yA = d0 <= dc * 1.001 ? dc * 1.001 : d0;
+      const target = Math.min(dn, D);
+      res.pts = wsProfile(cv, q, n, S, L, yA, target + 0.03 * (yA - target), true).reverse();
+      if (d0 <= dc * 1.001) res.dcX = L;
+      res.desc = d0 <= dc * 1.001
+        ? T('Kiểm soát cửa ra, chảy không áp: mặt nước hạ dần (đường M2) và qua d<sub>c</sub> tại cửa ra.', 'Outlet control, free-surface flow: the water surface drops (M2 profile) and passes d<sub>c</sub> at the outlet.')
+        : T('Kiểm soát cửa ra, chảy không áp: mực nước hạ lưu TW khống chế chiều sâu cửa ra.', 'Outlet control, free-surface flow: tailwater TW governs the outlet depth.');
+    }
+  }
+  // nước nhảy ở cửa ra khi dòng ra chảy xiết và TW cao hơn chiều sâu cửa ra
+  const yOut = res.pts[res.pts.length - 1][1];
+  const gO = C.geom(cv, Math.max(1e-3, yOut)), Fr = (q / gO.A) / Math.sqrt(9.81 * gO.A / Math.max(gO.T, 1e-3));
+  if (!res.full && Fr > 1.05 && TW > yOut * 1.05) res.jump = true;
+  res.yOut = yOut; res.Fr = Fr;
+  return res;
+}
+
+function drawFlow(st, print){
+  const g0 = culvertGeom(st), p = st.pick, cv = p.cv, sk = g0.sk;
+  const { D, t, L, i, zr, xa, xb, zHW, zTop, th } = g0;
+  const fc = flowCase(st);
+  const bl = st.bl, Bm = st.Bm, zm = zr + bl * st.il, xc = (xa + xb) / 2, zc = zm + Bm / 2 * st.im;
+  const zBed = x => st.Zv - i * x;
+  const TW = st.copt.TW, zTW = st.Zout + TW;
+  const upLen = Math.max(4, 0.28 * L), dnLen = Math.max(4, 0.28 * L);
+  const xMin = -upLen, xMax = L + dnLen;
+  const zW = Math.min(st.Zhw, zc + 0.6);
+  const zTopV = Math.max(zc, zW) + 0.6, zBotV = Math.min(zBed(xMax), st.Zv) - t - 1.1;
+  const W = 820, H = 330, mL = 8, mR = 8, mT = 30, mB = 34;
+  const sx = (W - mL - mR) / (xMax - xMin), sy = (H - mT - mB) / (zTopV - zBotV);
+  const X = x => mL + (x - xMin) * sx, Y = z => mT + (zTopV - z) * sy;
+  const P = pts => poly(pts, X, Y);
+  // bảng màu minh họa (cố định như hình HDS-5)
+  const col = { soil:'#d8bf8f', soilTop:'#b8955c', emb:'#8b5a2b', emb2:'#a46d38', pave:'#a7a9ac', pave2:'#7d7f82', water:'#7cc6e6', waterS:'#2b86b8', pipe:'#9b9b9b', dry:'#e9ecee', dark:'#0f2f3f', ink: print ? '#222' : 'var(--ink)', mut: print ? '#666' : 'var(--muted)' };
+  const uid = 'f' + Math.random().toString(36).slice(2, 7);
+  let g = `<defs>
+    <pattern id="${uid}h" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="${col.pipe}"/><line x1="0" y1="0" x2="0" y2="6" stroke="#5f5f5f" stroke-width="1.6"/></pattern>
+    <linearGradient id="${uid}e" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${col.emb2}"/><stop offset="1" stop-color="${col.emb}"/></linearGradient>
+    <linearGradient id="${uid}g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${col.soil}"/><stop offset="1" stop-color="#c9ab76"/></linearGradient>
+  </defs>`;
+  // nền thiên nhiên (đáy suối kéo dài, đất phía dưới)
+  const zG = x => zBed(x) - t; // đáy ngoài ống nằm trên nền
+  g += `<path d="${P([[xMin, zBed(xMin)], [0, zBed(0)], [L, zBed(L)], [xMax, zBed(xMax)], [xMax, zBotV], [xMin, zBotV]])}" fill="url(#${uid}g)"/>`;
+  g += `<line x1="${X(xMin)}" y1="${Y(zBed(xMin))}" x2="${X(xMax)}" y2="${Y(zBed(xMax))}" stroke="${col.soilTop}" stroke-width="1.5"/>`;
+  // nền đắp
+  const road = [[xa, zr], [xa + bl, zm], [xc, zc], [xb - bl, zm], [xb, zr]];
+  let emb;
+  if (sk.mitre) emb = [[0, zBed(0)], ...road, [L, zBed(L)]];
+  else if (sk.proj) emb = [[g0.ext, zTop - i * g0.ext], ...road, [L - g0.ext, zTop - i * (L - g0.ext)], [L - g0.ext, zBed(L - g0.ext)], [g0.ext, zBed(g0.ext)]];
+  else emb = [[0, zHW], ...road, [L, zHW - i * L], [L, zBed(L)], [0, zBed(0)]];
+  g += `<path d="${P(emb)}" fill="url(#${uid}e)"/>`;
+  // mặt đường (lớp áo xám có mui)
+  const hA = Math.max(0.15, st.hA);
+  g += `<path d="${P([[xa + bl, zm], [xc, zc], [xb - bl, zm], [xb - bl - 0.15, zm - hA], [xc, zc - hA], [xa + bl + 0.15, zm - hA]])}" fill="${col.pave}" stroke="${col.pave2}" stroke-width=".8"/>`;
+  // nước thượng lưu: hồ nước dâng, mặt nước cong xuống vào cống
+  const yIn = fc.pts[0][1], zInW = zBed(0) + yIn;
+  const xr = Math.max(1.2, Math.min(upLen * 0.5, 3));
+  const curve = `M${X(xMin)},${Y(zW)} L${X(-xr)},${Y(zW)} C${X(-xr * 0.4)},${Y(zW)} ${X(-xr * 0.3)},${Y(zInW)} ${X(0)},${Y(zInW)}`;
+  g += `<path d="${curve} L${X(0)},${Y(zBed(0))} L${X(xMin)},${Y(zBed(xMin))} Z" fill="${col.water}"/>`;
+  g += `<path d="${curve}" fill="none" stroke="${col.waterS}" stroke-width="1.6"/>`;
+  // thân cống: lòng khô
+  g += `<path d="${P([[0, zBed(0)], [L, zBed(L)], [L, zBed(L) + D], [0, zBed(0) + D]])}" fill="${col.dry}"/>`;
+  // nước trong cống
+  const wpts = fc.pts.map(([x, y]) => [x, zBed(x) + Math.min(y, D)]);
+  g += `<path d="${P([...wpts, [L, zBed(L)], [0, zBed(0)]])}" fill="${col.water}"/>`;
+  if (!fc.full) g += `<path d="M${wpts.map(q => X(q[0]).toFixed(1) + ',' + Y(q[1]).toFixed(1)).join(' L')}" fill="none" stroke="${col.waterS}" stroke-width="1.4"/>`;
+  // đường d_c (nét đứt) và d_n (chấm) trong thân cống
+  if (fc.dc < D * 0.999) g += `<line x1="${X(0)}" y1="${Y(zBed(0) + fc.dc)}" x2="${X(L)}" y2="${Y(zBed(L) + fc.dc)}" stroke="#4d5a62" stroke-width="1" stroke-dasharray="7 4"/>`;
+  if (fc.dn < D * 0.999 && Math.abs(fc.dn - fc.dc) > 0.03) g += `<line x1="${X(0)}" y1="${Y(zBed(0) + fc.dn)}" x2="${X(L)}" y2="${Y(zBed(L) + fc.dn)}" stroke="#4d5a62" stroke-width="1" stroke-dasharray="2 3"/>`;
+  // đường đo áp khi chảy có áp
+  if (fc.full) {
+    const Vf = p.oc.V, hIn = st.Zhw - (1 + p.oc.ke) * Vf * Vf / 19.62, hOut = st.Zout + p.oc.ho;
+    g += `<line x1="${X(0)}" y1="${Y(hIn)}" x2="${X(L)}" y2="${Y(hOut)}" stroke="${col.waterS}" stroke-width="1.4" stroke-dasharray="8 4"/>`;
+    g += svgText(X(L * 0.5), Y((hIn + hOut) / 2) - 5, T('Đường đo áp', 'HGL'), { c:col.dark, fs:10.5, w:600 });
+  }
+  // thành ống (gạch chéo)
+  g += `<path d="${P([[0, zBed(0) + D], [L, zBed(L) + D], [L, zBed(L) + D + t], [0, zBed(0) + D + t]])}" fill="url(#${uid}h)" stroke="#555" stroke-width=".8"/>`;
+  g += `<path d="${P([[0, zBed(0) - t], [L, zBed(L) - t], [L, zBed(L)], [0, zBed(0)]])}" fill="url(#${uid}h)" stroke="#555" stroke-width=".8"/>`;
+  // tường đầu
+  if (sk.head) {
+    [[0, th], [L - th, L]].forEach(([x0, x1]) => {
+      g += `<path d="${P([[x0, zBed(x0) + D + t], [x1, zBed(x1) + D + t], [x1, zHW - i * x1], [x0, zHW - i * x0]])}" fill="#6f6f6f" stroke="#444" stroke-width=".8"/>`;
+      g += `<path d="${P([[x0, zBed(x0) - t], [x1, zBed(x1) - t], [x1, zBed(x1) - t - 0.45], [x0, zBed(x0) - t - 0.45]])}" fill="#6f6f6f" stroke="#444" stroke-width=".8"/>`;
+    });
+  }
+  // nước hạ lưu + nước nhảy
+  const zOutW = zBed(L) + fc.yOut;
+  if (fc.jump) {
+    const xj = Math.min(dnLen * 0.35, 2.2);
+    g += `<path d="M${X(L)},${Y(zOutW)} C${X(L + xj * 0.3)},${Y(zOutW)} ${X(L + xj * 0.45)},${Y(zTW + 0.25 * TW)} ${X(L + xj * 0.7)},${Y(zTW + 0.12 * TW)} L${X(L + xj)},${Y(zTW)} L${X(xMax)},${Y(zTW)} L${X(xMax)},${Y(zBed(xMax))} L${X(L)},${Y(zBed(L))} Z" fill="${col.water}"/>`;
+    // xoáy nước nhảy
+    let curl = ''; const n0 = 5;
+    for (let k = 0; k < n0; k++) {
+      const cx = X(L + xj * (0.3 + 0.12 * k)), cy = Y(zTW + 0.12 * TW * (1 - Math.abs(k - 2) / 3)), r = 4 + 2 * (k % 2);
+      curl += `<path d="M${cx - r},${cy} a${r},${r} 0 1,1 ${2 * r},0" fill="#d9f1fb" stroke="${col.waterS}" stroke-width="1"/>`;
+    }
+    g += curl;
+    g += `<line x1="${X(L + xj)}" y1="${Y(zTW)}" x2="${X(xMax)}" y2="${Y(zTW)}" stroke="${col.waterS}" stroke-width="1.6"/>`;
+  } else {
+    const xj = Math.min(dnLen * 0.35, 2.0);
+    g += `<path d="M${X(L)},${Y(zOutW)} C${X(L + xj * 0.5)},${Y(zOutW)} ${X(L + xj * 0.5)},${Y(zTW)} ${X(L + xj)},${Y(zTW)} L${X(xMax)},${Y(zTW)} L${X(xMax)},${Y(zBed(xMax))} L${X(L)},${Y(zBed(L))} Z" fill="${col.water}"/>`;
+    g += `<path d="M${X(L)},${Y(zOutW)} C${X(L + xj * 0.5)},${Y(zOutW)} ${X(L + xj * 0.5)},${Y(zTW)} ${X(L + xj)},${Y(zTW)} L${X(xMax)},${Y(zTW)}" fill="none" stroke="${col.waterS}" stroke-width="1.6"/>`;
+  }
+  // ---- kích thước kiểu HDS-5 (mũi tên hai đầu)
+  const vdim = (x, z1, z2, label, side = 'r', c = col.dark) => {
+    const xx = X(x), y1 = Y(z1), y2 = Y(z2);
+    const tx = side === 'r' ? xx + 6 : xx - 6;
+    return `<line x1="${xx}" y1="${y1}" x2="${xx}" y2="${y2}" stroke="${c}" stroke-width="1.2"/>` +
+      `<path d="M${xx},${y2} l-3.5,7 h7 Z M${xx},${y1} l-3.5,-7 h7 Z" fill="${c}"/>` +
+      `<line x1="${xx - 6}" y1="${y2}" x2="${xx + 6}" y2="${y2}" stroke="${c}" stroke-width="1"/><line x1="${xx - 6}" y1="${y1}" x2="${xx + 6}" y2="${y1}" stroke="${c}" stroke-width="1"/>` +
+      svgText(tx, (y1 + y2) / 2 + 5, label, { a: side === 'r' ? 'start' : 'end', c, fs:13, w:700 });
+  };
+  const xHW = -Math.min(upLen * 0.55, 2.4);
+  g += vdim(xHW, zBed(xHW), zW, 'HW', 'r');
+  g += vdim(L * 0.38, zBed(L * 0.38), zBed(L * 0.38) + D, 'D', 'l');
+  const xDc = fc.dcX != null ? (fc.dcX === 0 ? Math.min(L * 0.32, Math.max(L * 0.12, 1.5)) : L - Math.min(L * 0.1, 1.2)) : L * 0.32;
+  if (fc.dc < D * 0.999) g += vdim(xDc, zBed(xDc), zBed(xDc) + fc.dc, 'd<tspan dy="3" font-size="10">c</tspan>', 'r');
+  if (fc.dn < D * 0.999 && Math.abs(fc.dn - fc.dc) > 0.03) g += vdim(L * 0.7, zBed(L * 0.7), zBed(L * 0.7) + fc.dn, 'd<tspan dy="3" font-size="10">n</tspan>', 'r');
+  const xTW = L + dnLen * 0.72;
+  g += vdim(xTW, zBed(xTW), zTW, 'TW', 'l');
+  // S0
+  const xs0 = L * 0.56, ys0 = Y(zBed(xs0) + Math.min(fc.dn, fc.dc, D) * 0.35);
+  const ang = Math.atan2(i * sy, sx) * 180 / Math.PI;
+  g += `<g transform="rotate(${ang.toFixed(2)} ${X(xs0)} ${ys0})"><text x="${X(xs0) - 10}" y="${ys0 + 4}" font-size="13" font-weight="700" fill="${col.dark}" text-anchor="end">S<tspan dy="3" font-size="10">0</tspan></text><line x1="${X(xs0)}" y1="${ys0}" x2="${X(xs0) + 32}" y2="${ys0}" stroke="${col.dark}" stroke-width="1.3"/><path d="M${X(xs0) + 38},${ys0} l-8,-3.5 v7 Z" fill="${col.dark}"/></g>`;
+  // ghi chú cao độ, kích thước
+  g += svgText(X(xc), Y(zc) - 8, `${T('Tim đường','Centreline')} ${f(zc,2)} · B = ${f(st.Bn,1)} m`, { c:col.ink, fs:11, w:600 });
+  g += svgText(X(xMin) + 4, Y(zW) - 6, `${T('MNTL','HW level')} ${f(st.Zhw,2)}${st.Zhw > zr ? T(' — vượt vai đường!', ' — above shoulder!') : ''}`, { a:'start', c: st.Zhw > zr ? '#b23a2e' : col.ink, fs:11, w:600 });
+  g += svgText(X(xMax) - 4, Y(zTW) - 6, `${f(zTW,2)}`, { a:'end', c:col.ink, fs:11, w:600 });
+  g += svgText(X(L / 2), H - 10, `${cv.shape === 'circ' ? T('Cống tròn Φ','Pipe Φ') + f(D,2) : T('Cống hộp ','Box ') + f(cv.B,1) + '×' + f(D,1)} m — ${T('minh họa 1 cửa','one barrel shown')}${p.N > 1 ? T(' (phương án ' + p.N + ' cửa)', ' (' + p.N + '-barrel option)') : ''} · L = ${f(L,2)} m · i = ${f(i * 100,2)}% · HW = ${f(p.HW,2)} m · d<tspan dy="2" font-size="9">c</tspan><tspan dy="-2"> = ${f(fc.dc,2)} m</tspan> · TW = ${f(TW,2)} m`, { c:col.ink, fs:11 });
+  g += svgText(W - mR, 16, `${T('Tỉ lệ đứng phóng đại','Vertical exaggeration')} ${f(sy / sx, 1)}${T(' lần','×')}`, { a:'end', c:col.mut, fs:10 });
+  return { svg: `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="${T('Mặt cắt ngang nền đường tại tim cống','Roadway cross-section at culvert')}" style="max-width:${W}px;display:block">${g}</svg>`, desc: fc.desc, fc };
+}
+
+/* 2) Chính diện cửa vào (nhìn từ thượng lưu) */
+function drawFront(st, print){
+  const g0 = culvertGeom(st), c = drawPalette(print);
+  const { D, t, N, span, W0, Whw, zHW, zTop, zF, sk, lw, lwy, wingDeg, centers, cv, tw } = g0;
+  const zr = st.zRoad, Zv = st.Zv;
+  const half = Whw / 2 + (wingDeg != null ? Math.max(lwy, tw) : 0);
+  const roadHalf = Math.max(half + 1.5, Whw / 2 + st.mtl * (zr - zHW) * 0.6);
+  const yMin = -roadHalf, yMax = roadHalf;
+  const zW = hwDraw(st, zr), over = st.Zhw > zr;
+  const zTopV = Math.max(zr, zW) + 0.9, zBotV = zF - 0.5;
+  const W = 520, mL = 14, mR = 14, mT = 30, mB = 22;
+  const s = Math.min((W - mL - mR) / (yMax - yMin), 300 / (zTopV - zBotV));
+  const H = mT + mB + (zTopV - zBotV) * s;
+  const ox = mL + ((W - mL - mR) - (yMax - yMin) * s) / 2;
+  const X = y => ox + (y - yMin) * s, Y = z => mT + (zTopV - z) * s;
+  const P = pts => poly(pts, X, Y);
+  let g = '';
+  // mái taluy phía sau (nhìn chính diện thấy mặt mái đi lên tới vai đường)
+  g += `<path d="${P([[yMin, zr], [yMax, zr], [yMax, Zv], [yMin, Zv]])}" fill="${c.soil}" stroke="none"/>`;
+  g += `<line x1="${X(yMin)}" x2="${X(yMax)}" y1="${Y(zr)}" y2="${Y(zr)}" stroke="${c.road}" stroke-width="2.2"/>`;
+  // nước
+  g += `<path d="${P([[yMin, zW], [yMax, zW], [yMax, Zv], [yMin, Zv]])}" fill="${c.wfill}"/>`;
+  // tường cánh
+  if (wingDeg != null) {
+    const wy = Math.max(lwy, tw);
+    [-1, 1].forEach(sg => {
+      const y0 = sg * Whw / 2, y1 = sg * (Whw / 2 + wy);
+      g += `<path d="${P([[y0, zF], [y0, zHW], [y1, wingDeg < 5 ? zHW : Zv + 0.3], [y1, zF]])}" fill="${c.con}" stroke="${c.ink}" stroke-width="1"/>`;
+    });
+  }
+  // tường đầu
+  if (sk.head) g += `<path d="${P([[-Whw / 2, zF], [Whw / 2, zF], [Whw / 2, zHW], [-Whw / 2, zHW]])}" fill="${c.con2}" stroke="${c.ink}" stroke-width="1.2"/>`;
+  // móng
+  g += `<line x1="${X(yMin)}" x2="${X(yMax)}" y1="${Y(Zv)}" y2="${Y(Zv)}" stroke="${c.bed}" stroke-width="1.6"/>`;
+  // các cửa cống
+  centers.forEach(yc => {
+    if (cv.shape === 'circ') {
+      g += `<circle cx="${X(yc)}" cy="${Y(Zv + D / 2)}" r="${((D / 2 + t) * s).toFixed(1)}" fill="${c.con}" stroke="${c.ink}" stroke-width="1"/>`;
+      if (sk.edge === 'socket' || sk.proj) g += `<circle cx="${X(yc)}" cy="${Y(Zv + D / 2)}" r="${((D / 2 + 1.5 * t) * s).toFixed(1)}" fill="none" stroke="${c.ink}" stroke-width=".8"/>`;
+      g += `<circle cx="${X(yc)}" cy="${Y(Zv + D / 2)}" r="${(D / 2 * s).toFixed(1)}" fill="${c.surf}" stroke="${c.ink}" stroke-width="1.2"/>`;
+      if (sk.edge === 'bev') g += `<circle cx="${X(yc)}" cy="${Y(Zv + D / 2)}" r="${((D / 2 + Math.min(0.2, 0.1 * D)) * s).toFixed(1)}" fill="none" stroke="${c.ink}" stroke-width=".8" stroke-dasharray="2 2"/>`;
+    } else {
+      g += `<path d="${P([[yc - span / 2, Zv], [yc + span / 2, Zv], [yc + span / 2, Zv + D], [yc - span / 2, Zv + D]])}" fill="${c.surf}" stroke="${c.ink}" stroke-width="1.2"/>`;
+      if (sk.edge === 'bev') { const b = Math.min(0.2, 0.1 * D); g += `<path d="${P([[yc - span / 2, Zv + D - b], [yc - span / 2 + b, Zv + D]])}" fill="none" stroke="${c.ink}" stroke-width=".9"/><path d="${P([[yc + span / 2, Zv + D - b], [yc + span / 2 - b, Zv + D]])}" fill="none" stroke="${c.ink}" stroke-width=".9"/>`; }
+    }
+  });
+  if (cv.shape === 'box' && !sk.head) g += `<path d="${P([[-W0 / 2, Zv - t], [W0 / 2, Zv - t], [W0 / 2, zTop], [-W0 / 2, zTop]])}" fill="none" stroke="${c.ink}" stroke-width="1"/>`;
+  // mực nước
+  g += `<line x1="${X(yMin)}" x2="${X(yMax)}" y1="${Y(zW)}" y2="${Y(zW)}" stroke="${c.w}" stroke-width="1.8" stroke-dasharray="6 3"/>`;
+  const T = (x, y, s2, o) => svgText(x, y, s2, Object.assign({ c: c.ink }, o));
+  g += T(X(yMin) + 2, Y(zW) - 5, over ? `${Tr('MNTL','HW level')} ${f(st.Zhw,2)}${Tr(' — vượt vai đường!',' — above shoulder!')}` : `${Tr('MNTL','HW level')} ${f(st.Zhw,2)}`, { a:'start', c: over ? c.bad : c.w, w:600 });
+  g += T(X(yMax) - 2, Y(zr) - 6, `${Tr('Vai đường','Shoulder')} ${f(zr,2)}`, { a:'end', fs:10.5 });
+  g += T(X(0), Y(zF) + 14, `${N > 1 ? N + Tr(' cửa ',' barrels ') : ''}${cv.shape === 'circ' ? 'Φ' + f(D,2) : f(span,1) + '×' + f(D,1)} m · ${esc(sTxt(sk))}`, { fs:10.5, w:600 });
+  if (sk.head) g += dimH(X(-Whw / 2), X(Whw / 2), Y(zHW) - 8, `${f(Whw,2)} m`, c.dim);
+  return `<svg viewBox="0 0 ${W} ${H.toFixed(0)}" width="100%" role="img" aria-label="${Tr('Chính diện cửa vào cống','Inlet elevation')}" style="max-width:${W}px;display:block">${g}</svg>`;
+}
+
+/* 3) Bình đồ cửa cống (tim đường vuông góc tim cống) */
+function drawPlan(st, print){
+  const g0 = culvertGeom(st), c = drawPalette(print);
+  const { D, t, N, span, W0, Whw, th, sk, lw, lwx, lwy, wingDeg, centers, cv, tw, L, xa, xb, ext } = g0;
+  const bl = st.bl, la = st.la, lb = st.lb, m = st.mtl, zr = st.zRoad;
+  const skew = (sk.skew || 0) * Math.PI / 180;
+  const toeIn = xa - m * (zr - st.Zv), toeOut = xb + m * (zr - st.Zout);
+  const lwxI = wingDeg != null ? lwx : 0;
+  const xMin = Math.min(toeIn, -Math.max(la, lwxI)) - 1.2, xMax = Math.max(toeOut, L + Math.max(lb, lwxI)) + 1.2;
+  const wingSpan = wingDeg != null ? Whw / 2 + Math.max(lwy, tw) + 0.3 : Whw / 2;
+  const yHalf = Math.max(wingSpan + Math.abs(Math.tan(skew)) * Whw / 2, W0 / 2) + 1.6;
+  const W = 520, mL = 12, mR = 12, mT = 24, mB = 24;
+  const s = Math.min((W - mL - mR) / (xMax - xMin), 340 / (2 * yHalf));
+  const H = mT + mB + 2 * yHalf * s;
+  const ox = mL + ((W - mL - mR) - (xMax - xMin) * s) / 2;
+  const X = x => ox + (x - xMin) * s, Y = y => mT + (yHalf - y) * s;
+  const P = pts => poly(pts, X, Y);
+  let g = '';
+  // nền đường và mái taluy
+  g += `<path d="${P([[toeIn, -yHalf], [toeOut, -yHalf], [toeOut, yHalf], [toeIn, yHalf]])}" fill="${c.soil}" stroke="none"/>`;
+  // ký hiệu taluy (vạch dài – ngắn)
+  const hatch = (x0, x1, dir) => { let h = ''; let k = 0; for (let y = -yHalf + 0.4; y < yHalf; y += 0.55, k++) { const len = (k % 2 ? 0.45 : 1) * Math.abs(x1 - x0); h += `<line x1="${X(x1)}" x2="${X(x1 - dir * len)}" y1="${Y(y)}" y2="${Y(y)}" stroke="${c.mut}" stroke-width=".7"/>`; } return h; };
+  g += hatch(toeIn, xa, 1) + hatch(xb, toeOut, -1);
+  g += `<path d="${P([[xa, -yHalf], [xb, -yHalf], [xb, yHalf], [xa, yHalf]])}" fill="${c.soil2}" fill-opacity=".55" stroke="none"/>`;
+  if (bl > 0.05) g += `<path d="${P([[xa + bl, -yHalf], [xb - bl, -yHalf], [xb - bl, yHalf], [xa + bl, yHalf]])}" fill="${c.pave}" fill-opacity=".35" stroke="none"/>`;
+  [xa, xb].forEach(x => g += `<line x1="${X(x)}" x2="${X(x)}" y1="${Y(yHalf)}" y2="${Y(-yHalf)}" stroke="${c.road}" stroke-width="1.6"/>`);
+  [xa + bl, xb - bl].forEach(x => g += `<line x1="${X(x)}" x2="${X(x)}" y1="${Y(yHalf)}" y2="${Y(-yHalf)}" stroke="${c.road}" stroke-width=".8"/>`);
+  g += `<line x1="${X((xa + xb) / 2)}" x2="${X((xa + xb) / 2)}" y1="${Y(yHalf)}" y2="${Y(-yHalf)}" stroke="${c.road}" stroke-width=".8" stroke-dasharray="10 4 2 4"/>`;
+  [toeIn, toeOut].forEach(x => g += `<line x1="${X(x)}" x2="${X(x)}" y1="${Y(yHalf)}" y2="${Y(-yHalf)}" stroke="${c.mut}" stroke-width=".8" stroke-dasharray="4 3"/>`);
+  // sân cống và gia cố (hình thang giữa hai tường cánh)
+  const wy = wingDeg != null ? Whw / 2 + lwy : Whw / 2 + 0.3;
+  const apron = (x0, dir, len) => {
+    const lx = Math.max(len, lwxI);
+    return P([[x0, -Whw / 2], [x0 + dir * lwxI, -wy], [x0 + dir * lx, -wy], [x0 + dir * lx, wy], [x0 + dir * lwxI, wy], [x0, Whw / 2]]);
+  };
+  if (la > 0 || sk.head) g += `<path d="${apron(0, -1, la)}" fill="${c.apr}" stroke="${c.ink}" stroke-width=".8"/>`;
+  if (lb > 0 || sk.head) g += `<path d="${apron(L, 1, lb)}" fill="${c.apr}" stroke="${c.ink}" stroke-width=".8"/>`;
+  // thân cống (nét đứt trong nền đắp)
+  centers.forEach(yc => {
+    const hw = (cv.shape === 'circ' ? D : span) / 2;
+    g += `<path d="${P([[0, yc - hw], [L, yc - hw], [L, yc + hw], [0, yc + hw]])}" fill="none" stroke="${c.ink}" stroke-width="1" stroke-dasharray="5 3"/>`;
+  });
+  g += `<path d="${P([[0, -W0 / 2], [L, -W0 / 2], [L, W0 / 2], [0, W0 / 2]])}" fill="none" stroke="${c.ink}" stroke-width="1.2"/>`;
+  // tường đầu (có thể xiên) và tường cánh
+  const rot = (x0, y, dx) => [x0 + dx + y * Math.tan(skew), y];
+  const head = (x0, dir) => {
+    if (!sk.head) return '';
+    const a = rot(x0, -Whw / 2, 0), b = rot(x0, Whw / 2, 0), b2 = rot(x0, Whw / 2, dir * th), a2 = rot(x0, -Whw / 2, dir * th);
+    let h = `<path d="${P([a, b, b2, a2])}" fill="${c.con2}" stroke="${c.ink}" stroke-width="1.2"/>`;
+    if (wingDeg != null) {
+      [-1, 1].forEach(sg => {
+        const r = rot(x0, sg * Whw / 2, 0);
+        const ang = wingDeg * Math.PI / 180;
+        const ex = r[0] - dir * lw * Math.cos(ang), ey = r[1] + sg * lw * Math.sin(ang);
+        // pháp tuyến để tạo bề dày
+        const vx = ex - r[0], vy = ey - r[1], vl = Math.hypot(vx, vy) || 1, nx = -vy / vl * tw * sg * dir, ny = vx / vl * tw * sg * dir;
+        h += `<path d="${P([[r[0], r[1]], [ex, ey], [ex + nx, ey + ny], [r[0] + nx, r[1] + ny]])}" fill="${c.con}" stroke="${c.ink}" stroke-width="1"/>`;
+      });
+    }
+    return h;
+  };
+  g += head(0, 1) + head(L, -1);
+  // mũi tên dòng chảy
+  const ay = 0, ax0 = xMin + 0.4, ax1 = Math.min(-Math.max(la, lwxI) - 0.2, xMin + 2.6);
+  g += `<line x1="${X(ax0)}" x2="${X(ax1)}" y1="${Y(ay)}" y2="${Y(ay)}" stroke="${c.w}" stroke-width="2"/><path d="M${X(ax1)},${Y(ay)} l-8,-4 v8 Z" fill="${c.w}"/>`;
+  const T = (x, y, s2, o) => svgText(x, y, s2, Object.assign({ c: c.ink }, o));
+  g += T(X((xa + xb) / 2), Y(yHalf) - 8, Tr('Tim đường','Centreline'), { fs:10.5, w:600 });
+  g += T(X(xa), Y(-yHalf) + 14, Tr('Vai','Shoulder'), { fs:10 , c:c.mut});
+  g += T(X(xb), Y(-yHalf) + 14, Tr('Vai','Shoulder'), { fs:10 , c:c.mut});
+  g += T(X(toeIn), Y(-yHalf) + 14, Tr('Chân taluy','Toe of slope'), { fs:10, c:c.mut });
+  g += T(X(toeOut), Y(-yHalf) + 14, Tr('Chân taluy','Toe of slope'), { fs:10, c:c.mut });
+  if (wingDeg != null) g += T(X(-lwxI / 2), Y(wy) - 6, `${Tr('Tường cánh','Wingwall')} ${f(wingDeg, wingDeg % 1 ? 1 : 0)}°`, { fs:10, c:c.mut });
+  if (sk.skew) g += T(X(th), Y(-Whw / 2) + 14, `${Tr('Tường đầu xiên','Skewed headwall')} ${sk.skew}°`, { a:'start', fs:10, c:c.mut });
+  return `<svg viewBox="0 0 ${W} ${H.toFixed(0)}" width="100%" role="img" aria-label="${Tr('Bình đồ cống và cửa thu','Culvert plan')}" style="max-width:${W}px;display:block">${g}</svg>`;
+}
+
+
+/* ================= TAB 3: BẢNG TRA ================= */
+function renderT(st){
+  const o = $('outT');
+  if (st.direct) { o.innerHTML = `<div class="note">${T('Đang nhập Q trực tiếp nên không dùng Bảng A.1–A.3.','Q is entered directly, so Tables A.1–A.3 are not used.')}</div>` + fixesCard(); return; }
+  const h = st.h, I = st.hin; if (h.error) { o.innerHTML = ''; return; }
+  const R = C.RAW, reg = I.region;
+  // A.2
+  const a2 = R.A2.phi.map((p,i) => {
+    const hit = p===h.ta.x0 || p===h.ta.x1;
+    return `<tr><td class="num">${f(p,1)}</td><td class="num${hit?' hit':''}">${R.A2.tau[reg][i]==null?'—':f(R.A2.tau[reg][i],1)}</td></tr>`; }).join('');
+  // A.3
+  const fixes = new Set(R.fixes.filter(x => x.reg===reg).map(x => x.tau+'|'+x.phils));
+  const a3 = R.A3.tau.map((t,i) => `<tr><td class="num">${t}</td>` + R.A3.phils.map((x,j) => {
+    const hit = (t===h.ap.t0||t===h.ap.t1) && (x===h.ap.x0||x===h.ap.x1);
+    const fx = fixes.has(t+'|'+x);
+    return `<td class="num${hit?' hit':''}${fx?' fix':''}" ${fx?`title="${T('Ô đã hiệu chỉnh lỗi in','Cell corrected for a misprint')}"`:''}>${f(R.A3.A[reg][i][j],4)}</td>`; }).join('') + '</tr>').join('');
+  // A.1
+  const a1 = h.a1;
+  const a1t = C.RAW.A1[a1.cap];
+  const a1rows = (a1.cap==='VI' ? [{H:T('mọi H_P','all H_P'), v:a1.row}] : a1t.H.map((hh,i) => ({H:hh, v:a1t.phi[i]}))).map((r,i) =>
+    `<tr><td>${esc(r.H)}</td>${r.v.map((v,k) => `<td class="num${(a1.cap==='VI'||i===a1.bandIdx)&&k===a1.col?' hit':''}">${v==null?'—':f(v,3)}</td>`).join('')}</tr>`).join('');
+  o.innerHTML = `
+  <div class="card lookup"><h3>${T('Bảng A.1 — Hệ số dòng chảy φ, cấp đất','Table A.1 — Runoff coefficient φ, soil class')} ${a1.cap}</h3>
+    <div class="tbl-wrap"><table><thead><tr><th>H<sub>P</sub> (mm)</th>${C.A1_COLS.map(c => `<th title="${esc(c.group)}">${c.idx+3}<br><span style="font-weight:400">${esc('(' + c.range + ' km²)')}</span></th>`).join('')}</tr></thead><tbody>${a1rows}</tbody></table></div>
+    ${a1.notes.map(n => `<div class="note">${esc(n)}</div>`).join('')}</div>
+  <div class="grid2">
+  <div class="card lookup"><h3>${T('Bảng A.2','Table A.2')} — τ<sub>sd</sub> (${T('phút','min')}), ${T('vùng','region')} ${reg}</h3>
+    <div class="tbl-wrap" style="max-height:420px"><table><thead><tr><th>φ<sub>sd</sub></th><th>τ<sub>sd</sub></th></tr></thead><tbody>${a2}</tbody></table></div>
+    <p class="hint">φ<sub>sd</sub> = ${f(h.phiSd,2)} → τ<sub>sd</sub> = ${f(h.tau,1)} ${T('phút (nội suy giữa hai ô tô đậm).','min (interpolated between the two highlighted cells).')}</p></div>
+  <div class="card"><h3>${T('Các giá trị trung gian','Intermediate values')}</h3>
+    <table><tbody>
+      <tr><td>L<sub>sd</sub></td><td class="num">${f(h.Lsd,1)} m</td></tr>
+      <tr><td>m<sub>sd</sub> (${T('Bảng 4','Table 4')})</td><td class="num">${f(h.msd,2)}</td></tr>
+      <tr><td>m<sub>ls</sub> (${T('Bảng 5','Table 5')})</td><td class="num">${h.mls}</td></tr>
+      <tr><td>φ<sub>sd</sub></td><td class="num">${f(h.phiSd,3)}</td></tr>
+      <tr><td>φ<sub>ls</sub></td><td class="num">${f(h.phiLs,3)}</td></tr>
+      <tr><td>τ<sub>sd</sub></td><td class="num">${f(h.tau,2)} ${T('phút','min')}</td></tr>
+      <tr><td>A<sub>P</sub></td><td class="num">${f(h.Ap,5)}</td></tr>
+      <tr><td>δ (${T('Bảng 6','Table 6')})</td><td class="num">${f(h.delta,3)}</td></tr>
+    </tbody></table></div>
+  </div>
+  <div class="card lookup"><h3>${T('Bảng A.3 — Mô đun tương đối','Table A.3 — Relative peak modulus')} A<sub>P</sub>, ${T('vùng','region')} ${reg}</h3>
+    <div class="tbl-wrap"><table><thead><tr><th>τ<sub>sd</sub> \\ φ<sub>ls</sub></th>${R.A3.phils.map(x => `<th>${x}</th>`).join('')}</tr></thead><tbody>${a3}</tbody></table></div>
+    <p class="hint">${T('Bốn ô tô đậm là các ô dùng để nội suy song tuyến. Ô gạch chân chấm là ô đã hiệu chỉnh lỗi in (xem danh sách bên dưới).','The four highlighted cells are used for bilinear interpolation. Cells with a dotted underline were corrected for misprints (see list below).')}</p></div>
+  ${fixesCard()}`;
+}
+function fixesCard(){
+  const R = C.RAW;
+  return `<div class="card"><h3>${T('Lỗi in đã hiệu chỉnh trong Bảng A.3','Misprints corrected in Table A.3')} (${R.fixes.length} ${T('ô','cells')})</h3>
+    <p class="hint" style="margin:0 0 8px">${T('Bảng A.3 phải giảm dần theo φ<sub>ls</sub> và theo τ<sub>sd</sub>. App kiểm tra tính đơn điệu trên toàn bảng và sửa các ô sai rõ rệt (dịch dấu phẩy, đảo chữ số). Nên đối chiếu với bản in chính thức khi dùng cho hồ sơ.','Table A.3 must decrease with φ<sub>ls</sub> and with τ<sub>sd</sub>. The app checks monotonicity over the whole table and fixes obviously wrong cells (shifted decimal point, transposed digits). Check against the official printed standard for formal submissions.')}</p>
+    <div class="tbl-wrap" style="max-height:340px"><table><thead><tr><th>${T('Vùng','Region')}</th><th>τ<sub>sd</sub></th><th>φ<sub>ls</sub></th><th>${T('Bản gốc','Original')}</th><th>${T('Dùng trong app','Used in app')}</th><th>${T('Lý do','Reason')}</th></tr></thead><tbody>
+    ${R.fixes.map(x => `<tr><td>${x.reg}</td><td class="num">${x.tau}</td><td class="num">${x.phils}</td><td class="num">${f(x.orig,4)}</td><td class="num">${f(x.fix,4)}</td><td style="text-align:left;white-space:normal">${esc(C.whyText(x))}</td></tr>`).join('')}
+    </tbody></table></div></div>`;
+}
+
+/* ================= TAB 4: THUYẾT MINH ================= */
+function wmCSS(){
+  const txt = T('© TS. Đặng Minh Tân — ĐH Giao thông Vận tải', '© Dr. Dang Minh Tan — University of Transport and Communications');
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="580" height="320"><text x="290" y="165" text-anchor="middle" transform="rotate(-25 290 160)" font-family="Be Vietnam Pro, Arial, sans-serif" font-size="17" font-weight="600" fill="#1d5c86" fill-opacity="0.11">${txt}</text></svg>`;
+  return `url('data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg).replace(/'/g,'%27')}')`;
+}
+function renderR(st){
+  const r = $('report');
+  const today = new Date().toLocaleDateString(T('vi-VN','en-GB'));
+  let hy = '';
+  if (st.direct) {
+    hy = `<h2>1. ${T('Lưu lượng thiết kế','Design discharge')}</h2><p>${T('Lưu lượng thiết kế lấy theo số liệu cho trước:','The design discharge is given:')} <span class="res">Q = ${f(st.Q,2)} m³/s</span>.</p>`;
+  } else if (st.h && !st.h.error) {
+    const h = st.h, I = st.hin;
+    hy = `
+    <h2>1. ${T('Số liệu đầu vào','Input data')}</h2>
+    <table><tbody>
+      <tr><td>${T('Tần suất thiết kế P','Design frequency P')}</td><td>${f(I.P,0)} %</td><td>${T('Lượng mưa ngày','Daily rainfall')} H<sub>P</sub></td><td>${f(I.Hp,0)} mm</td></tr>
+      <tr><td>${T('Vùng mưa (Bảng 3)','Rainfall region (Table 3)')}</td><td colspan="3">${I.region} — ${esc(C.regionName(I.region))}</td></tr>
+      <tr><td>${T('Diện tích lưu vực F','Catchment area F')}</td><td>${f(I.F,3)} km²</td><td>${T('Chiều dài lòng chính L','Main channel length L')}</td><td>${f(I.L,2)} km</td></tr>
+      <tr><td>${T('Tổng chiều dài lòng nhánh Σl','Total tributary length Σl')}</td><td>${f(I.sumL,2)} km</td><td>${T('Số sườn dốc','Hillslopes')}</td><td>${I.oneSide?T('1 sườn','1 side'):T('2 sườn','2 sides')}</td></tr>
+      <tr><td>${T('Độ dốc lòng chính','Main channel slope')} J<sub>ls</sub></td><td>${f(I.Jls,1)} ‰</td><td>${T('Độ dốc sườn dốc','Hillslope gradient')} J<sub>sd</sub></td><td>${f(I.Jsd,1)} ‰</td></tr>
+      <tr><td>${T('Cấp đất','Soil class')}</td><td>${h.a1.cap}${I.capMode==='sand'?` (${T('cát','sand')} ${f(I.sand,0)}%)`:''}</td><td>${T('Hồ ao, đầm lầy','Lakes, swamps')}</td><td>${f(I.lakePct,1)} % (${I.lakePos==='thuong'?T('thượng lưu','upstream'):T('hạ lưu','downstream')})</td></tr>
+      <tr><td>m<sub>sd</sub> (${T('Bảng 4','Table 4')})</td><td colspan="3">${f(h.msd,2)} — ${esc(I.msdName)}, ${esc(I.msdCase.toLowerCase())}</td></tr>
+      <tr><td>m<sub>ls</sub> (${T('Bảng 5','Table 5')})</td><td colspan="3">${h.mls} — ${esc(I.mlsName)}</td></tr>
+    </tbody></table>
+    <h2>2. ${T('Lưu lượng đỉnh lũ theo công thức cường độ giới hạn (mục 5.2)','Peak discharge by the limiting-intensity formula (clause 5.2)')}</h2>
+    <h3>2.1. ${T('Chiều dài bình quân sườn dốc — công thức (1)','Mean hillslope length — Eq. (1)')}</h3>
+    <div class="f">L_sd = 1000·F / [${f(h.k18,1)}·(L + Σl)] = 1000 × ${f(I.F,3)} / [${f(h.k18,1)} × (${f(I.L,2)} + ${f(I.sumL,2)})] = ${f(h.Lsd,1)} m</div>
+    <h3>2.2. ${T('Hệ số dòng chảy lũ φ — Bảng A.1','Flood runoff coefficient φ — Table A.1')}</h3>
+    <p>${T('Cấp đất','Soil class')} ${h.a1.cap}, H<sub>P</sub> = ${f(I.Hp,0)} mm ${T('thuộc hàng','falls in row')} "${esc(h.a1.band)}"; F = ${f(I.F,3)} km² ${T('ứng với','uses')} ${esc(h.a1.colInfo.label)}, ${T('nhóm','group')} ${esc(h.a1.colInfo.group)}: φ = ${f(h.a1.phi,3)}.${h.phiSource==='manual'?` ${T('Người thiết kế chọn','Designer selected')} φ = <b>${f(h.phi,3)}</b>.`:''}</p>
+    <h3>2.3. ${T('Hệ số địa mạo thủy văn sườn dốc — công thức (9)','Hillslope hydro-morphological factor — Eq. (9)')}</h3>
+    <div class="f">φ_sd = L_sd^0,6 / [m_sd · J_sd^0,3 · (φ·H_P)^0,4]
+     = ${f(h.Lsd,1)}^0,6 / [${f(h.msd,2)} × ${f(I.Jsd,1)}^0,3 × (${f(h.phi,3)} × ${f(I.Hp,0)})^0,4]
+     = ${f(Math.pow(h.Lsd,0.6),3)} / [${f(h.msd,2)} × ${f(Math.pow(I.Jsd,0.3),3)} × ${f(Math.pow(h.phi*I.Hp,0.4),3)}] = ${f(h.phiSd,3)}</div>
+    <h3>2.4. ${T('Thời gian tập trung nước trên sườn dốc — Bảng A.2','Hillslope concentration time — Table A.2')}</h3>
+    <div class="f">${T('Vùng','Region')} ${I.region}: φ_sd = ${f(h.ta.x0,1)} → τ = ${f(h.ta.y0,1)} ${T('ph','min')};  φ_sd = ${f(h.ta.x1,1)} → τ = ${f(h.ta.y1,1)} ${T('ph','min')}
+τ_sd = ${f(h.ta.y0,1)} + (${f(h.ta.y1,1)} − ${f(h.ta.y0,1)}) × (${f(h.ta.used,3)} − ${f(h.ta.x0,1)}) / (${f(h.ta.x1,1)} − ${f(h.ta.x0,1)}) = ${f(h.tau,2)} ${T('phút','min')}</div>
+    <h3>2.5. ${T('Đặc trưng địa mạo thủy văn lòng sông — công thức (10)','Channel hydro-morphological factor — Eq. (10)')}</h3>
+    ${I.noChannel ? `<p>${T('Lòng sông không rõ ràng nên lấy φ<sub>ls</sub> = 0 (mục 5.2.3).','No defined channel, so φ<sub>ls</sub> = 0 (clause 5.2.3).')}</p>` :
+    `<div class="f">φ_ls = 1000·L / [m_ls · J_ls^(1/3) · F^(1/4) · (φ·H_P)^(1/4)]
+     = 1000 × ${f(I.L,2)} / [${h.mls} × ${f(Math.cbrt(I.Jls),3)} × ${f(Math.pow(I.F,0.25),3)} × ${f(Math.pow(h.phi*I.Hp,0.25),3)}] = ${f(h.phiLs,3)}</div>`}
+    <h3>2.6. ${T('Mô đun tương đối đỉnh lũ','Relative peak modulus')} A<sub>P</sub> — ${T('Bảng A.3','Table A.3')}</h3>
+    <table><thead><tr><th>${T('Vùng','Region')} ${I.region}</th><th>φ_ls = ${h.ap.x0}</th><th>φ_ls = ${h.ap.x1}</th><th>${T('Nội suy','Interpolated')} φ_ls = ${f(h.ap.phiU,2)}</th></tr></thead><tbody>
+      <tr><td>τ_sd = ${h.ap.t0}</td><td>${f(h.ap.a00,4)}</td><td>${f(h.ap.a01,4)}</td><td>${f(h.ap.r0,5)}</td></tr>
+      <tr><td>τ_sd = ${h.ap.t1}</td><td>${f(h.ap.a10,4)}</td><td>${f(h.ap.a11,4)}</td><td>${f(h.ap.r1,5)}</td></tr>
+      <tr><td colspan="3">${T('Nội suy theo','Interpolated at')} τ_sd = ${f(h.ap.tauU,2)} ${T('phút','min')}</td><td class="res">A_P = ${f(h.Ap,5)}</td></tr>
+    </tbody></table>
+    <h3>2.7. ${T('Hệ số triết giảm do hồ ao, đầm lầy — Bảng 6','Reduction for lakes and swamps — Table 6')}</h3>
+    <p>${T('Tỷ lệ diện tích hồ ao, đầm lầy','Lake/swamp area share')} ${f(I.lakePct,1)}% → δ = ${f(h.delta,3)}.</p>
+    <h3>2.8. ${T('Lưu lượng đỉnh lũ thiết kế — công thức (8)','Design peak discharge — Eq. (8)')}</h3>
+    <div class="f">Q_P = A_P · φ · H_P · F · δ = ${f(h.Ap,5)} × ${f(h.phi,3)} × ${f(I.Hp,0)} × ${f(I.F,3)} × ${f(h.delta,3)} = ${f(h.Q,2)} m³/s</div>
+    ${h.notes.length?`<p><i>${T('Ghi chú:','Notes:')}</i> ${h.notes.map(esc).join(' ')}</p>`:''}`;
+  }
+  let cu = '';
+  if (st.pick) {
+    const p = st.pick, O = st.copt, n0 = st.direct ? 2 : 3;
+    const top = st.list.slice(0, 8); if (!top.includes(p)) top.push(p);
+    cu = `
+    <h2${st.direct?'':' class="pb"'}>${n0}. ${T('Tính thủy lực cống (mục 6.1 và Phụ lục D)','Culvert hydraulics (clause 6.1 and Annex D)')}</h2>
+    <p>${T('Phương án được chọn:','Selected option:')} <span class="res">${p.cv.shape==='circ'?T('cống tròn','pipe culvert'):T('cống hộp','box culvert')} ${esc(p.label)}</span>, ${T('cửa vào','inlet')} "${esc(C.inletName(p.inlet))}" (${T('toán đồ','chart')} ${esc(p.inlet.chart)}), n = ${f(p.n,3)}, L = ${f(st.L,2)} m, i = ${f(O.S*100,2)} %. ${T('Mực nước hạ lưu','Tailwater')} TW = ${f(O.TW,2)} m.</p>
+    <h3>${n0}.1. ${T('Chế độ kiểm soát cửa vào','Inlet control')}</h3>
+    <p>${T('Các toán đồ D.1–D.6 được dựng từ các phương trình của FHWA HDS-5 (Herr 1977); app tính trực tiếp theo phương trình với hệ số của loại cửa vào đã chọn:','Charts D.1–D.6 are built from the FHWA HDS-5 equations (Herr 1977); the app evaluates the equations directly with the coefficients of the selected inlet:')} K = ${cf(p.inlet.K)}, M = ${cf(p.inlet.M)}, c = ${cf(p.inlet.c)}, Y = ${cf(p.inlet.Y)}, K<sub>u</sub> = 1,811 (${T('hệ SI','SI units')}).</p>
+    <div class="f">q = Q/N = ${f(st.Q,3)} / ${p.N} = ${f(p.q,3)} m³/s;   A = ${f(C.fullArea(p.cv),3)} m²;   D = ${f(p.D,2)} m
+X = K_u·q / (A·D^0,5) = 1,811 × ${f(p.q,3)} / (${f(C.fullArea(p.cv),3)} × ${f(Math.sqrt(p.D),3)}) = ${f(p.ic.X,3)}  → ${T('vùng','zone:')} ${p.ic.zone}
+${p.ic.zoneKey==='unsub' ? (p.inlet.form===1
+  ? `d_c = ${f(p.ic.dc,3)} m;  V_c = ${f(p.ic.Vc,3)} m/s;  H_c = d_c + V_c²/2g = ${f(p.ic.Hc,3)} m\nHW/D = H_c/D + K·X^M − 0,5·i = ${f(p.ic.Hc/p.D,3)} + ${cf(p.inlet.K)} × ${f(p.ic.X,3)}^${cf(p.inlet.M)} ${p.ic.ks<0?'−':'+'} ${f(Math.abs(p.ic.ks),1)} × ${f(O.S,4)} = ${f(p.ic.ratio,3)}`
+  : `HW/D = K·X^M = ${cf(p.inlet.K)} × ${f(p.ic.X,3)}^${cf(p.inlet.M)} = ${f(p.ic.ratio,3)}`)
+ : p.ic.zoneKey==='sub' ? `HW/D = c·X² + Y − 0,5·i = ${cf(p.inlet.c)} × ${f(p.ic.X,3)}² + ${cf(p.inlet.Y)} ${p.ic.ks<0?'−':'+'} ${f(Math.abs(p.ic.ks),1)} × ${f(O.S,4)} = ${f(p.ic.ratio,3)}`
+ : `${T('Vùng quá độ 3,5 < X < 4,0: nội suy tuyến tính giữa phương trình không ngập và ngập','Transition zone 3,5 < X < 4,0: linear interpolation between the unsubmerged and submerged equations')} → HW/D = ${f(p.ic.ratio,3)}`}
+HW_i = ${f(p.ic.ratio,3)} × ${f(p.D,2)} = ${f(p.ic.HW,3)} m</div>
+    <h3>${n0}.2. ${T('Chế độ kiểm soát cửa ra','Outlet control')}</h3>
+    <div class="f">V = q/A = ${f(p.oc.V,3)} m/s;  R = A/P = ${f(p.oc.R,3)} m;  k_e = ${f(p.oc.ke,2)} (${T('Bảng C.1','Table C.1')})
+H = [1 + k_e + 2g·n²·L / R^(4/3)] · V²/2g = [1 + ${f(p.oc.ke,2)} + ${f(p.oc.kf,3)}] × ${f(p.oc.V*p.oc.V/19.62,4)} = ${f(p.oc.H,3)} m
+d_c = ${f(p.oc.dc,3)} m;  h_o = max(TW; (d_c + D)/2) = max(${f(O.TW,3)}; ${f(p.oc.hoA,3)}) = ${f(p.oc.ho,3)} m
+HW_o = H + h_o − L·i = ${f(p.oc.H,3)} + ${f(p.oc.ho,3)} − ${f(st.L,2)} × ${f(O.S,4)} = ${f(p.oc.HW,3)} m</div>
+    <h3>${n0}.3. ${T('Đánh giá','Assessment')}</h3>
+    <p>HW = max(HW<sub>i</sub>; HW<sub>o</sub>) = <span class="res">${f(p.HW,3)} m</span>; ${T('cống làm việc theo chế độ kiểm soát','the culvert operates under')} <b>${p.control==='inlet'?T('cửa vào','inlet control'):T('cửa ra','outlet control')}</b>, ${T('chế độ chảy','flow regime')} <b>${p.regime.toLowerCase()}</b>. HW/D = ${f(p.ratio,3)}.</p>
+    <p>${T('Vận tốc cửa ra','Outlet velocity')}: ${esc(p.how)}, d<sub>o</sub> = ${f(p.dout,3)} m, V<sub>o</sub> = q/A<sub>o</sub> = <span class="res">${f(p.Vout,2)} m/s</span>.${p.vcp?` ${T('Gia cố hạ lưu','Outlet protection')}: ${esc(p.vcp.name)}, V<sub>cp</sub> = ${f(p.vcp.v,1)} m/s (${T('Bảng 10, chiều sâu','Table 10, depth')} ${f(p.vcp.depth,1)} m, ${T('lấy theo giá trị gần nhất','nearest value')}).`:''}</p>
+    <table><thead><tr><th>${T('Điều kiện kiểm tra','Check')}</th><th>${T('Kết quả','Result')}</th></tr></thead><tbody>
+      ${p.checks.map(c => `<tr><td>${esc(c.text)}</td><td class="${c.ok?'ok':'bad'}">${c.ok?T('Đạt','Pass'):T('Không đạt','Fail')}</td></tr>`).join('')}
+      ${isFinite(st.Zvai)?`<tr><td>${T('Cao độ vai đường','Shoulder level')} ${f(st.Zvai,2)} m ≥ ${f(st.Zmin,2)} m</td><td class="${st.Zvai>=st.Zmin-1e-9?'ok':'bad'}">${st.Zvai>=st.Zmin-1e-9?T('Đạt','Pass'):T('Không đạt','Fail')}</td></tr>`:''}
+    </tbody></table>
+    <h3>${n0}.4. ${T('Cao độ khống chế và chiều dài cống','Control levels and culvert length')}</h3>
+    <div class="f">${T('Mực nước dâng trước cống: Z_tl = Z_đáy + HW','Headwater level: Z_hw = Z_inv + HW')} = ${f(st.Zv,2)} + ${f(p.HW,2)} = ${f(st.Zhw,2)} m
+${T('Cao độ vai đường tối thiểu:','Minimum shoulder level:')}
+  ${T('theo mực nước: Z_tl','by water level: Z_hw')} + ${f(st.dFree,2)} = ${f(st.Zmin1,2)} m
+  ${T('theo cấu tạo:  Z_đáy + D + t + h_đắp + h_áo − b_lề·i_lề','by structure:  Z_inv + D + t + h_fill + h_pave − b_shd·i_shd')} = ${f(st.Zv,2)} + ${f(p.D,2)} + ${f(st.wall,2)} + ${f(st.cover,2)} + ${f(st.hA,2)} − ${f(st.bl,2)}×${f(st.il,3)} = ${f(st.Zmin2,2)} m
+  → ${T('Z_vai,min','Z_sh,min')} = ${f(st.Zmin,2)} m
+${st.Lauto?`${T('Chiều dài cống (mái taluy','Culvert length (fill slope')} 1:${f(st.mtl,2)} ${T('gặp','meets')} ${structOf(p.cv.inlet).mitre?T('đáy ống cắt vát','the mitered invert'):structOf(p.cv.inlet).proj?T('đỉnh ống, ống nhô ra e = ','the pipe crown, projection e = ')+f(st.geo.ext,2)+' m':T('đỉnh tường đầu','the headwall top')}):
+  h = ${T('Z_vai − Z_gặp mái','Z_sh − Z_meet')} = ${f(st.geo.zr,2)} − ${f(st.geo.zMeet,2)} = ${f(st.geo.h,2)} m
+  L = (B + 2m·h + 2e) / (1 − m·i) = (${f(st.Bn,1)} + 2 × ${f(st.mtl,2)} × ${f(st.geo.h,2)} + 2 × ${f(st.geo.ext,2)}) / (1 − ${f(st.mtl,2)} × ${f(O.S,4)}) = ${f(st.L,2)} m`:`${T('Chiều dài cống nhập tay','Entered culvert length')} L = ${f(st.L,2)} m (${T('theo','for')} B = ${f(st.Bn,1)} m, ${T('mái','slope')} 1:${f(st.mtl,2)} ${T('cần','required')} ${f(st.Lneed,2)} m)`}</div>
+    <h3>${n0}.5. ${T('So sánh các phương án','Option comparison')}</h3>
+    <table><thead><tr><th>${T('Phương án','Option')}</th><th>ΣA (m²)</th><th>HW_i</th><th>HW_o</th><th>HW (m)</th><th>HW/D</th><th>${T('Kiểm soát','Control')}</th><th>V_o (m/s)</th><th>${T('Kết luận','Result')}</th></tr></thead><tbody>
+      ${top.map(x => `<tr${x===p?' style="font-weight:600"':''}><td>${x.cv.shape==='circ'?T('Tròn','Pipe'):T('Hộp','Box')} ${esc(x.label)}</td><td>${f(x.area,2)}</td><td>${f(x.ic.HW,2)}</td><td>${f(x.oc.HW,2)}</td><td>${f(x.HW,2)}</td><td>${f(x.ratio,2)}</td><td>${x.control==='inlet'?T('Cửa vào','Inlet'):T('Cửa ra','Outlet')}</td><td>${f(x.Vout,2)}</td><td class="${x.ok?'ok':'bad'}">${x.ok?T('Đạt','Pass'):T('Không đạt','Fail')}</td></tr>`).join('')}
+    </tbody></table>
+    <h3${st.direct?'':' class="pb"'}>${n0}.6. ${T('Bản vẽ bố trí cống và đường quan hệ HW – Q','Culvert layout drawings and HW – Q curve')}</h3>
+    ${(() => { const fl = drawFlow(st, true); return `<div class="fig"><p class="cap"><b>a) ${T('Mặt cắt ngang nền đường tại tim cống','Roadway cross-section along the culvert axis')}</b> — ${T('cửa thu','inlet')}: ${esc(sTxt(structOf(p.cv.inlet))).toLowerCase()}</p>
+    ${fl.svg}<p class="note9">${fl.desc} ${T('Nét đứt dài: d<sub>c</sub>; nét chấm: d<sub>n</sub>.','Long dashes: d<sub>c</sub>; dots: d<sub>n</sub>.')}</p></div>`; })()}
+    <div class="figrow">
+      <div class="fig"><p class="cap"><b>b) ${T('Chính diện cửa vào','Inlet elevation')}</b></p>${drawFront(st, true)}</div>
+      <div class="fig"><p class="cap"><b>c) ${T('Bình đồ cống và cửa thu','Plan of culvert and inlet')}</b></p>${drawPlan(st, true)}</div>
+    </div>
+    <div class="figrow">
+      <div class="fig"><p class="cap"><b>d) ${T('Đường quan hệ HW – Q','HW – Q curve')}</b></p>${plotHWQ(st, true)}
+        <p class="note9">${T('Liền: kiểm soát cửa vào · đứt: kiểm soát cửa ra · chấm đỏ: HW cho phép.','Solid: inlet control · dashed: outlet control · red dotted: allowable HW.')}</p></div>
+      <div class="fig">
+        <h2 style="margin-top:1.5mm">${n0+1}. ${T('Kết luận','Conclusion')}</h2>
+    <p>${T('Với lưu lượng thiết kế','For the design discharge')} Q = ${f(st.Q,2)} m³/s, ${T('chọn','select a')} <span class="res">${p.cv.shape==='circ'?T('cống tròn','pipe culvert'):T('cống hộp','box culvert')} ${esc(p.label)}</span>, ${T('chiều dài','length')} ${f(st.L,2)} m, ${T('độ dốc','slope')} ${f(O.S*100,2)} %. ${T('Chiều sâu nước dâng trước cống','Headwater depth')} HW = ${f(p.HW,2)} m; ${T('cao độ vai đường tại vị trí cống không thấp hơn','the road shoulder at the culvert must be at least')} ${f(st.Zmin,2)} m. ${T('Gia cố hạ lưu','Outlet protection')}: ${p.vcp?esc(p.vcp.name):'—'}.</p>
+        <div class="sign"><div><b>${T('NGƯỜI LẬP','PREPARED BY')}</b></div><div><b>${T('NGƯỜI KIỂM TRA','CHECKED BY')}</b></div></div>
+      </div>
+    </div>`;
+  }
+  r.innerHTML = `<div class="wm" style="background-image:${wmCSS()}"></div>
+    <div class="titleblk"><div><h1>${T('Thuyết minh tính toán cống','Culvert design calculation')}</h1><p class="sub">${esc(st.prj||'')}</p></div>
+      <div class="meta">${T('Theo TCVN 9845:2013<br>Tính toán các đặc trưng dòng chảy lũ<br>Ngày lập:','To TCVN 9845:2013<br>Calculation of flood flow characteristics<br>Date:')} ${today}</div></div>
+    ${hy}${cu}
+    <div class="foot">${T(`Lập bằng công cụ "Tính cống TCVN 9845" (TS. Đặng Minh Tân, ĐH GTVT). Bảng A.3 dùng bản đã hiệu chỉnh ${C.RAW.fixes.length} ô lỗi in; phương trình kiểm soát cửa vào theo FHWA HDS-5, cơ sở của toán đồ D.1–D.6. Người thiết kế chịu trách nhiệm kiểm tra số liệu và kết quả.`, `Prepared with the "Culvert design to TCVN 9845" tool (Dr. Dang Minh Tan, University of Transport and Communications). Table A.3 uses a version with ${C.RAW.fixes.length} misprints corrected; inlet control equations follow FHWA HDS-5, the basis of charts D.1–D.6. The designer is responsible for checking inputs and results.`)}</div>`;
+}
+
+
+/* ================= NGÔN NGỮ / LANGUAGE ================= */
+const PRJ_VI = 'Cống tại Km 12+450 — Tuyến đường ví dụ', PRJ_EN = 'Culvert at Km 12+450 — Example road';
+function localizeNumbers(root){
+  if (C.getLang() !== 'en' || !root) return;
+  const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+  let n; while ((n = w.nextNode())) { if (/\d,\d/.test(n.nodeValue)) n.nodeValue = n.nodeValue.replace(/(\d),(\d)/g, '$1.$2'); }
+}
+function applyStatic(){
+  document.querySelectorAll('[data-en]').forEach(el => {
+    if (el.dataset.vi == null) el.dataset.vi = el.innerHTML;
+    el.innerHTML = C.getLang() === 'en' ? el.dataset.en : el.dataset.vi;
+  });
+  const en = C.getLang() === 'en';
+  document.documentElement.lang = en ? 'en' : 'vi';
+  document.documentElement.style.setProperty('--pb-label', en ? '"— page break —"' : '"— trang mới —"');
+  $('btnLang').textContent = en ? 'VI' : 'EN';
+  $('btnLang').title = en ? 'Chuyển sang tiếng Việt' : 'Switch to English';
+  $('phiManual').placeholder = en ? 'table' : 'tra bảng';
+  if ($('prj').value === PRJ_VI && en) $('prj').value = PRJ_EN;
+  if ($('prj').value === PRJ_EN && !en) $('prj').value = PRJ_VI;
+  $('minD').querySelectorAll('option').forEach(o => o.textContent = en ? (+o.value).toFixed(2) : (+o.value).toFixed(2).replace('.', ','));
+  document.title = en ? 'Culvert design TCVN 9845' : 'Tính cống TCVN 9845';
+}
+function setLanguage(l){
+  C.setLang(l);
+  try { localStorage.setItem('cong-lang', C.getLang()); } catch(e) {}
+  applyStatic(); fillSelects(); setPrintNote(); render();
+}
+$('btnLang').addEventListener('click', () => setLanguage(C.getLang() === 'en' ? 'vi' : 'en'));
+
+/* ================= vòng lặp ================= */
+function render(){
+  syncVis();
+  state = compute();
+  renderQ(state); renderC(state); renderT(state); renderR(state);
+  ['outQ','outC','outT','report'].forEach(id => localizeNumbers($(id)));
+  $('Lhint').textContent = state.pick ? (state.Lauto ? `${T('Phương án','Option')} ${state.pick.label}: L = ${f(state.L,2)} m ${T('(đầu cống tại chỗ mái taluy gặp cửa cống).','(culvert ends where the fill slope meets the inlet).')}` : `${T('Theo bề rộng nền cần','The roadbed width requires')} L = ${f(state.Lneed,2)} m.`) : '';
+}
+document.querySelectorAll('#fq input, #fq select, #fc input, #fc select').forEach(el => {
+  el.addEventListener('input', render); el.addEventListener('change', render);
+});
+const defaults = {};
+document.querySelectorAll('#fq input, #fq select, #fc input, #fc select').forEach(el => defaults[el.id] = el.type==='checkbox' ? el.checked : el.value);
+$('btnSample').addEventListener('click', () => {
+  Object.entries(defaults).forEach(([id,v]) => { const el = $(id); if (el.type==='checkbox') el.checked = v; else el.value = v; });
+  selKey = null; render();
+});
+try { const t = localStorage.getItem('cong-tab'); if (t && $('tab-'+t)) showTab(t); } catch(e) {}
+let lang0 = 'vi';
+try { lang0 = localStorage.getItem('cong-lang') || ((navigator.language || '').toLowerCase().startsWith('vi') ? 'vi' : 'vi'); } catch(e) {}
+if (/[?&#]lang=en/.test(location.search + location.hash) || location.hash === '#en') lang0 = 'en';
+C.setLang(lang0); applyStatic(); fillSelects(); setPrintNote();
+render();
+})();
+</script>
+</body>
+</html>
